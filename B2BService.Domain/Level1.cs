@@ -11,5 +11,7 @@ namespace B2BService.Domain
         public int Id { get; set; }
         public string Code { get; set; }
         public string Level1Name { get; set; }
+        public int NoOfClicks { get; set; }
+        public int NoOfImpressions { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace B2BService.Domain.Inventory
     public class Product:BaseClass
     {
         public int Id { get; set; }
+        public string ProductCode { get; set; }
         public int BrandId { get; set; }
         public int ModelId { get; set; }
         public string ShortName { get; set; }
@@ -29,5 +30,7 @@ namespace B2BService.Domain.Inventory
         public bool IsApproved { get; set; }
         public decimal ConversionRate { get; set; }
         public int CurrencyId { get; set; }
+        public int NoOfClicks { get; set; }
+        public int NoOfImpressions { get; set; }
     }
 }

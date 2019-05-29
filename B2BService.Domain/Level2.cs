@@ -13,6 +13,7 @@ namespace B2BService.Domain
         public string Code { get; set; }
         public string Level2Name { get; set; }
         public int SpecMasterId { get; set; }
-        
+        public int NoOfClicks { get; set; }
+        public int NoOfImpressions { get; set; }
     }
 }

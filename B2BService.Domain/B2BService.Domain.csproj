@@ -59,17 +59,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseClass.cs" />
+    <Compile Include="Comunication\SystemMessages.cs" />
+    <Compile Include="Comunication\SystemTasks.cs" />
     <Compile Include="Coparate\Organization.cs" />
     <Compile Include="Coparate\User.cs" />
     <Compile Include="Inventory\CateglogProducts.cs" />
     <Compile Include="Inventory\Product.cs" />
+    <Compile Include="Inventory\ProductImages.cs" />
+    <Compile Include="Inventory\ProductInterests.cs" />
+    <Compile Include="Inventory\SpecialProducts.cs" />
+    <Compile Include="Inventory\SupplierProducts.cs" />
     <Compile Include="Level1.cs" />
     <Compile Include="Level2.cs" />
     <Compile Include="Level3.cs" />
-    <Compile Include="ProductSpecDetail.cs" />
+    <Compile Include="Inventory\ProductSpecDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpecDetail.cs" />
-    <Compile Include="SpecMaster.cs" />
+    <Compile Include="Inventory\SpecDetail.cs" />
+    <Compile Include="Inventory\SpecMaster.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

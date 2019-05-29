@@ -13,6 +13,7 @@ namespace B2BService.Domain
         public int Level12d { get; set; }
         public string Code { get; set; }
         public string Level3Name { get; set; }
-        
+        public int NoOfClicks { get; set; }
+        public int NoOfImpressions { get; set; }
     }
 }
