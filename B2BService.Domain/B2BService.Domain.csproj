@@ -67,6 +67,8 @@
     <Compile Include="Inventory\Product.cs" />
     <Compile Include="Inventory\ProductImages.cs" />
     <Compile Include="Inventory\ProductInterests.cs" />
+    <Compile Include="Inventory\ProductReviews.cs" />
+    <Compile Include="Inventory\ProductWarrenty.cs" />
     <Compile Include="Inventory\SpecialProducts.cs" />
     <Compile Include="Inventory\SupplierProducts.cs" />
     <Compile Include="Level1.cs" />
