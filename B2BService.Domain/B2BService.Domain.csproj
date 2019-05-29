@@ -71,6 +71,7 @@
     <Compile Include="Inventory\ProductWarrenty.cs" />
     <Compile Include="Inventory\SpecialProducts.cs" />
     <Compile Include="Inventory\SupplierProducts.cs" />
+    <Compile Include="KeyValuePear.cs" />
     <Compile Include="Level1.cs" />
     <Compile Include="Level2.cs" />
     <Compile Include="Level3.cs" />
