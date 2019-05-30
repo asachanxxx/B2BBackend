@@ -16,6 +16,7 @@ using Microsoft.Owin.Security.OAuth;
 using B2BService.Service.Models;
 using B2BService.Service.Providers;
 using B2BService.Service.Results;
+using B2BService.Service.Owin;
 
 namespace B2BService.Service.Controllers
 {
@@ -26,8 +27,11 @@ namespace B2BService.Service.Controllers
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
 
+        private AuthRepository _repo = null;
+
         public AccountController()
         {
+            _repo = new AuthRepository();
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -318,27 +322,51 @@ namespace B2BService.Service.Controllers
             return logins;
         }
 
-        // POST api/Account/Register
+        //// POST api/Account/Register
+        //[AllowAnonymous]
+        //[Route("Register")]
+        //public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+
+        //    var manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+        //    IdentityResult result = await manager.CreateAsync(user, model.Password);
+
+        //    if (!result.Succeeded)
+        //    {
+        //        return GetErrorResult(result);
+        //    }
+
+        //    return Ok();
+        //}
+
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        public async Task<IHttpActionResult> Register(UserModel userModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            IdentityResult result = await _repo.RegisterUser(userModel);
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            IHttpActionResult errorResult = GetErrorResult(result);
 
-            if (!result.Succeeded)
+            if (errorResult != null)
             {
-                return GetErrorResult(result);
+                return errorResult;
             }
 
             return Ok();
         }
+
 
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]

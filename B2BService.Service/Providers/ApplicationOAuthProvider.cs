@@ -10,6 +10,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using B2BService.Service.Models;
+using B2BService.Service.Owin;
 
 namespace B2BService.Service.Providers
 {
@@ -27,28 +28,53 @@ namespace B2BService.Service.Providers
             _publicClientId = publicClientId;
         }
 
+        //public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+        //{
+        //    var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
+
+        //    ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
+
+        //    if (user == null)
+        //    {
+        //        context.SetError("invalid_grant", "The user name or password is incorrect.");
+        //        return;
+        //    }
+
+        //    ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
+        //       OAuthDefaults.AuthenticationType);
+        //    ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
+        //        CookieAuthenticationDefaults.AuthenticationType);
+
+        //    AuthenticationProperties properties = CreateProperties(user.UserName);
+        //    AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
+        //    context.Validated(ticket);
+        //    context.Request.Context.Authentication.SignIn(cookiesIdentity);
+        //}
+
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
 
-            ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
+            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
-            if (user == null)
+            using (AuthRepository _repo = new AuthRepository())
             {
-                context.SetError("invalid_grant", "The user name or password is incorrect.");
-                return;
+                IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
+
+                if (user == null)
+                {
+                    context.SetError("invalid_grant", "The user name or password is incorrect.");
+                    return;
+                }
             }
 
-            ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
-               OAuthDefaults.AuthenticationType);
-            ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
-                CookieAuthenticationDefaults.AuthenticationType);
+            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+            identity.AddClaim(new Claim("sub", context.UserName));
+            identity.AddClaim(new Claim("role", "user"));
 
-            AuthenticationProperties properties = CreateProperties(user.UserName);
-            AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
-            context.Validated(ticket);
-            context.Request.Context.Authentication.SignIn(cookiesIdentity);
+            context.Validated(identity);
+
         }
+
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
