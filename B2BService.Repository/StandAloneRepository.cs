@@ -60,6 +60,34 @@ namespace B2BService.Repository
             }
         }
 
-        
+        /// <summary>
+        /// This method is complicated. what it does is that it take one type of parameter as passing parameters and different types as Return type
+        /// THis will enable users to genaralize the passing and retrning types 
+        /// </summary>
+        /// <typeparam name="TPassing">Type that need to pass as parameters</typeparam>
+        /// <typeparam name="TOut">Type you want to return from the method</typeparam>
+        /// <param name="SPName">Stored procudure to exute</param>
+        /// <param name="Object">Passing object</param>
+        /// <returns></returns>
+        public async Task<IEnumerable<TOut>> QueryStoredProcedure<TPassing, TOut>(string SPName, TPassing Object) where TOut : class  where TPassing : class
+        {
+            try
+            {
+                var xmlperson = XMLTools.ObjectToXMLGeneric<TPassing>(Object);
+                using (IDbConnection db = Conn)
+                {
+                    DynamicParameters parameter = new DynamicParameters();
+                    parameter.Add("@XMLSQL", xmlperson, DbType.String, ParameterDirection.Input);
+                    parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+                    return await db.QueryAsync<TOut>(SPName, parameter, commandType: CommandType.StoredProcedure);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

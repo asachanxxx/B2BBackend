@@ -58,6 +58,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Product\CatelogItemsVM.cs" />
+    <Compile Include="Product\ProductVM.cs" />
+    <Compile Include="Product\SearchVM.cs" />
     <Compile Include="UserOrganisazionVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

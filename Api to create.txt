@@ -1,0 +1,72 @@
+//Once user has been logged in then system need to get the respective profile of thires
+//not all the details want from the system but relevent details
+//This is type of LoggedUserProfile that yet to create
+LoggedUserProfile GetAssociatedProfile(UserID)
+EditUserProfile(EditUserVM)
+EditOrganization(EditOrganizationVM)
+ChangePassword(UserID , CurrentPassword , NewPassword)
+ManagerDashboardData GetManagerSpecificDashboardData(UserID)
+BuyerDashboardData GetBuyerSpecificDashboardData(USerID)
+SellerDashboardData GetSellerSpecificDashboardData(UserID)
+string GetImage(string ImageId);
+List<string> GetImageBulk(int ID)
+MegaMenuVM GetDataForMegaMenu()
+
+Product Managemtnt
+===================
+List<CatelogItems> CatelogProductSearch(int BrandId,int Brand)
+
+
+
+ForMega Menu
+=============
+
+
+
+Dashboard(Individual user prospective)
+======================================
+
+LoggedUserProfile  object can be used to get basic data to dashboard
+It contains basics like DisplyName , Email , Picure , Address, phone
+
+Managers
+========
+
+Buyers
+======
+
+Sellers
+=======
+
+Hold design on these things
+and start Product Things
+
+
+R&D
+===
+Extract Pictures from the picture server
+Method
+Keep a common URL for pictures in Config
+make some method to name the pictures
+create a method to Combine the image path and image to get full path
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
