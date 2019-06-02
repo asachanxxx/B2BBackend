@@ -17,6 +17,7 @@ using B2BService.Service.Models;
 using B2BService.Service.Providers;
 using B2BService.Service.Results;
 using B2BService.Service.Owin;
+using B2BService.ViewModels;
 
 namespace B2BService.Service.Controllers
 {
@@ -322,33 +323,9 @@ namespace B2BService.Service.Controllers
             return logins;
         }
 
-        //// POST api/Account/Register
-        //[AllowAnonymous]
-        //[Route("Register")]
-        //public async Task<IHttpActionResult> Register(RegisterBindingModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
-        //    var manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
-
-        //    IdentityResult result = await manager.CreateAsync(user, model.Password);
-
-        //    if (!result.Succeeded)
-        //    {
-        //        return GetErrorResult(result);
-        //    }
-
-        //    return Ok();
-        //}
-
         [AllowAnonymous]
-        [Route("Register")]
-        public async Task<IHttpActionResult> Register(UserModel userModel)
+        [Route("RegisterOnlyUser")]
+        public async Task<IHttpActionResult> RegisterOnlyUser(UserModel userModel)
         {
             if (!ModelState.IsValid)
             {
@@ -356,6 +333,48 @@ namespace B2BService.Service.Controllers
             }
 
             IdentityResult result = await _repo.RegisterUser(userModel);
+
+            IHttpActionResult errorResult = GetErrorResult(result);
+
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
+
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        [Route("RegisterSeller")]
+        public async Task<IHttpActionResult> RegisterSeller(UserOrganisazionVM userModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult result = await _repo.RegisterSeller(userModel);
+
+            IHttpActionResult errorResult = GetErrorResult(result);
+
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
+
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        [Route("RegisterBuyer")]
+        public async Task<IHttpActionResult> RegisterBuyer(UserOrganisazionVM userModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult result = await _repo.RegisterBuyer(userModel);
 
             IHttpActionResult errorResult = GetErrorResult(result);
 

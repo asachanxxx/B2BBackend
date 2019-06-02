@@ -44,7 +44,7 @@ namespace B2BService.Domain.Coparate
         /// <summary>
         /// This will indicate the given company buy or sell in the online system
         /// </summary>
-        public string IsBuyOrSell { get; set; }
+        public bool IsSeller { get; set; }
 
 
     }
