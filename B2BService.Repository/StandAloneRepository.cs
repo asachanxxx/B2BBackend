@@ -48,9 +48,9 @@ namespace B2BService.Repository
                 {
                     DynamicParameters parameter = new DynamicParameters();
                     parameter.Add("@XMLSQL", xmlperson, DbType.String, ParameterDirection.Input);
-                    parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+                    parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
                     await db.ExecuteAsync(SPName, parameter,commandType: CommandType.StoredProcedure);
-                    int rowCount = parameter.Get<int>("@RowCount");
+                    int rowCount = parameter.Get<int>("@Status");
                     return rowCount;
                 }
             }

@@ -14,8 +14,18 @@ MegaMenuVM GetDataForMegaMenu()
 
 Product Managemtnt
 ===================
+int AddLevel1(Level1VM obj)
+int AddLevel2(Level2VM obj)
+int AddLevel3(Level3VM obj)
 List<CatelogItems> CatelogProductSearch(int BrandId,int Brand)
-
+int AddCatelogProduct(CatelogProductVM obj)
+//this will add a product fully
+int AddProductFull(ProductVM obj)
+//If a product already exists we add only price to the table
+int AddSupplierProduct(ProductId obj, Decimal price)
+int AddSpecMaster(SpecVM obj)
+int AddSpecDetails(List<SpecdetailsVM> obj)
+int AddProductSpecDetails(List<SpecdetailsVM> obj)
 
 
 ForMega Menu
@@ -44,29 +54,36 @@ and start Product Things
 
 R&D
 ===
-Extract Pictures from the picture server
+Extract Pictures from the picture server - Done
 Method
 Keep a common URL for pictures in Config
 make some method to name the pictures
 create a method to Combine the image path and image to get full path
 
 
+UI structure
+============
+
+B2Bmain - this is for buyers and anaon users. typically for genaral publi.
+when this UI get logged on by a buyer then it allows MyAccount Part to be aprea
+Other Menues can be decided latly.
+
+B2BSeller - Main page has another view for sellers and it is another application portal.
+when you click to log in as a seller then this portal will activate
+Menues can be found on the analysis excel doc
+
+B2BAdmin - this will be only allow for the company users to log in
+this is another separate login 
 
 
+B2BSeller
+========
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+ <customHeaders>
+    <add name="Access-Control-Allow-Origin" value="*" />
+    <add name="Access-Control-Allow-Methods" value="GET, POST, OPTIONS, PUT, DELETE" />
+    <add name="Access-Control-Allow-Headers" value="Content-Type"/>
+  </customHeaders>
 
 

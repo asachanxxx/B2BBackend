@@ -1,4 +1,6 @@
-﻿using B2BService.Unitilities;
+﻿using B2BService.Domain;
+using B2BService.Domain.Inventory;
+using B2BService.Unitilities;
 using B2BService.ViewModels.Product;
 using System;
 using System.Collections.Generic;
@@ -23,11 +25,11 @@ namespace B2BService.Repository.SystemRepositories
         /// </summary>
         /// <param name="modelVM">Search model to pass</param>
         /// <returns>Type of CatelogItemsVM</returns>
-        public async Task<IEnumerable<CatelogItemsVM>> CatelogProductSearch(SearchVM modelVM)
+        public async Task<IEnumerable<CateglogProducts>> CatelogProductSearch(SearchVM modelVM)
         {
             try
             {
-                return await StdRepo.QueryStoredProcedure<SearchVM, CatelogItemsVM> (GlobalSPNames.CatelogProductSearchSPName, modelVM);
+                return await StdRepo.QueryStoredProcedure<SearchVM, CateglogProducts> (GlobalSPNames.CatelogProductSearchSPName, modelVM);
             }
             catch (Exception ex)
             {
@@ -39,11 +41,11 @@ namespace B2BService.Repository.SystemRepositories
         /// </summary>
         /// <param name="modelVM"></param>
         /// <returns>type of int with the newly inserted produt ID</returns>
-        public async Task<int> AddProduct(ProductVM modelVM)
+        public async Task<int> AddProduct(ProductVM modelVM , int action)
         {
             try
             {
-                return await StdRepo.ExcuteStoredProcedureToSave<ProductVM>(GlobalSPNames.CatelogProductSearchSPName, modelVM);
+                return await StdRepo.ExcuteStoredProcedureToSave<ProductVM>(GlobalSPNames.AddProductSPName, modelVM);
             }
             catch (Exception ex)
             {
@@ -51,8 +53,63 @@ namespace B2BService.Repository.SystemRepositories
             }
         }
 
+    
 
+        public async Task<int> SaveCatelog(CateglogProducts modelVM , int action)
+        {
+            try
+            {
+                return await StdRepo.ExcuteStoredProcedureToSave<CateglogProducts>(GlobalSPNames.AddCatelogProductSPName, modelVM);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+      
 
+        public async Task<int> AddSpecMaster(SpecMaster modelVM,int type)
+        {
+            try
+            {
+                if (type == 1)
+                {
+                    return await StdRepo.ExcuteStoredProcedureToSave<SpecMaster>(GlobalSPNames.AddSpecMasterSPName, modelVM);
+                }
+                else {
+                    return await StdRepo.ExcuteStoredProcedureToSave<SpecMaster>(GlobalSPNames.UpdateSpecMasterSPName, modelVM);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<int> AddSpecDetails(List<SpecDetail> modelVM)
+        {
+            try
+            {
+                return await StdRepo.ExcuteStoredProcedureToSave<List<SpecDetail>>(GlobalSPNames.AddSpecDetailsSPName, modelVM);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<int> AddProductSpecDetails(List<ProductSpecDetail> modelVM)
+        {
+            try
+            {
+                return await StdRepo.ExcuteStoredProcedureToSave<List<ProductSpecDetail>>(GlobalSPNames.AddProductSpecDetailsSPName, modelVM);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
     }
 }

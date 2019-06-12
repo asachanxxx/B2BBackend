@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace B2BService.Domain
+namespace B2BService.Domain.Inventory
 {
-    public class SpecDetail : BaseClass
+    public class SpecItem:BaseClass
     {
         public int Id { get; set; }
-        public int SpecMasterId { get; set; }
-        public int SpecItemId { get; set; }
+        public string SpecItemName { get; set; }
+        public string SpecItemDisplayName { get; set; }
         public string DataType { get; set; }
-        public string DefaultValue { get; set; }
         public bool IsApproved { get; set; }
     }
 }

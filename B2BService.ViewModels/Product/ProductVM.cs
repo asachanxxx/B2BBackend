@@ -1,4 +1,5 @@
-﻿using System;
+﻿using B2BService.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace B2BService.ViewModels.Product
 {
-    public class ProductVM
+    public class ProductVM: BaseClass
     {
         public int Id { get; set; }
         public string ProductCode { get; set; }
@@ -26,5 +27,7 @@ namespace B2BService.ViewModels.Product
         public decimal SupplierPrice { get; set; }
         public decimal ProductPrice { get; set; }
         public string DefaultImagePath { get; set; }
+        public bool AddedByASeller { get; set; }
+        public string AddedSellerID { get; set; }
     }
 }

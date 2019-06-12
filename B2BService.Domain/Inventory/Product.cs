@@ -27,10 +27,21 @@ namespace B2BService.Domain.Inventory
         public decimal SupplierPrice { get; set; }
         public decimal ProductPrice { get; set; }
         public string DefaultImagePath { get; set; }
+        /// <summary>
+        /// When getting the item list filter using IsApproved =True
+        /// </summary>
         public bool IsApproved { get; set; }
         public decimal ConversionRate { get; set; }
         public int CurrencyId { get; set; }
         public int NoOfClicks { get; set; }
         public int NoOfImpressions { get; set; }
+        /// <summary>
+        /// Set this to true if the item was added by a seller
+        /// </summary>
+        public bool AddedByASeller { get; set; }
+        /// <summary>
+        /// Use this field to filter out the individual sellers product list on the portal
+        /// </summary>
+        public string AddedSellerID { get; set; }
     }
 }

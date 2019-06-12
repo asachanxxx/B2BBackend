@@ -21,17 +21,15 @@ namespace B2BService.Domain.Log
         /// 3-Warning
         /// </summary>
         public string USER_ID { get; set; }
-        public string IIS_AUTH_Token { get; set; }
         public string MESSAGE { get; set; }
         public string STACK_TRACE { get; set; }
-        public string OBJECT_INFO { get; set; }
-        public string MACHINE_NAME { get; set; }
-        public string INSTANCE_NAME { get; set; }
+        public string PysicalMethod { get; set; }
+        public string Controllername { get; set; }
+        public string UserAgent { get; set; }
         public string CLIENT_IP { get; set; }
         public string CLIENT_PORT { get; set; }
-        public string CPU_TIME { get; set; }
-        public int REQUEST_SIZE { get; set; }
-        public int RESPONSE_SIZE { get; set; }
+        public DateTime CPU_TIME { get; set; }
+     
 
     }
 }

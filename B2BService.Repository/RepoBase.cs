@@ -20,6 +20,8 @@ namespace B2BService.Repository
     /// <typeparam name="T">Entity witch would pass to the repository</typeparam>
     public class RepoBase<T> : IRepoBase<T> where T : class 
     {
+
+
         private string _TableName;
 
 
@@ -169,7 +171,7 @@ namespace B2BService.Repository
         {
             try
             {
-                string sql = "select * from Users where "+ valueField + " = '"+ Value + "' ";
+                string sql = "select * from " + _TableName.Trim() + " where " + valueField + " = '"+ Value + "' ";
                 using (IDbConnection db = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SysConn"].ConnectionString))
                 {
                     var val = await db.QueryFirstOrDefaultAsync<T>(sql);
@@ -189,11 +191,43 @@ namespace B2BService.Repository
             }
         }
 
+        public async Task<IEnumerable<T>> FindExistanceMulti(string valueField, string Value)
+        {
+            try
+            {
+                string sql = "select * from "+ _TableName.Trim() + " where " + valueField + " = '" + Value + "' ";
+                using (IDbConnection db = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SysConn"].ConnectionString))
+                {
+                   return await db.QueryAsync<T>(sql);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<IEnumerable<T>> FindExistanceMulti(string SQL)
+        {
+            try
+            {
+                using (IDbConnection db = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SysConn"].ConnectionString))
+                {
+                    return await db.QueryAsync<T>(SQL);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public T FindExistance_ReturnObject(string valueField, string Value)
         {
             try
             {
-                string sql = "select * from Users where " + valueField + " = '" + Value + "' ";
+                string sql = "select * from " + _TableName.Trim() + " where " + valueField + " = '" + Value + "' ";
                 using (IDbConnection db = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SysConn"].ConnectionString))
                 {
                     var val =  db.QueryFirstOrDefault<T>(sql);
@@ -312,36 +346,6 @@ namespace B2BService.Repository
         }
 
 
-        public int SaveNonAsync(T Entity, int Action)
-        {
-            try
-            {
-                int returnval = -1;
-                using (IDbConnection db = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SysConn"].ConnectionString))
-                {
-
-
-                    if (Action == 1)
-                    {
-                        returnval = int.Parse(db.Insert<T>(Entity).ToString());
-                        returnval = 1;
-                    }
-                    else
-                    {
-                        bool resultx =  db.Update<T>(Entity);
-                        if (resultx)
-                        {
-                            returnval = 2;
-                        }
-                    }
-                }
-                return returnval;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
 
     }
 }

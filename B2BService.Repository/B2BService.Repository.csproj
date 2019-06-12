@@ -66,6 +66,8 @@
     <Compile Include="RepoBase.cs" />
     <Compile Include="SellerRepositories\CoparateReporitory.cs" />
     <Compile Include="StandAloneRepository.cs" />
+    <Compile Include="SystemRepositories\BrandandModelRepository.cs" />
+    <Compile Include="SystemRepositories\CategoryRepository.cs" />
     <Compile Include="SystemRepositories\ProductRepository.cs" />
   </ItemGroup>
   <ItemGroup>

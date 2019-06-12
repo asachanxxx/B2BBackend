@@ -10,9 +10,6 @@ namespace B2BService.ViewModels.Product
     {
         public int ModelId { get; set; }
         public int BrandId { get; set; }
-
-        public int SeriesId { get; set; }
-
-        public string Name { get; set; }
+        public string SeriesId { get; set; }
     }
 }
