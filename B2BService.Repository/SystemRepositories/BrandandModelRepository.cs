@@ -20,11 +20,11 @@ namespace B2BService.Repository.SystemRepositories
 
      
 
-        public async Task<int> AddBrand(Brand modelVM)
+        public async Task<int> SaveBrand(Brand modelVM,int action)
         {
             try
             {
-                return await StdRepo.ExcuteStoredProcedureToSave<Brand>(GlobalSPNames.AddBrandSPName, modelVM);
+                return await StdRepo.ExcuteStoredProcedureToSave<Brand>(GlobalSPNames.SaveBrand, modelVM, action);
             }
             catch (Exception ex)
             {
@@ -32,11 +32,23 @@ namespace B2BService.Repository.SystemRepositories
             }
         }
 
-        public async Task<int> AddModel(Model modelVM)
+        public async Task<int> SaveModel(Model modelVM, int action)
         {
             try
             {
-                return await StdRepo.ExcuteStoredProcedureToSave<Model>(GlobalSPNames.AddModelSPName, modelVM);
+                return await StdRepo.ExcuteStoredProcedureToSave<Model>(GlobalSPNames.SaveModel, modelVM, action);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<int> SaveSeries(Series modelVM, int action)
+        {
+            try
+            {
+                return await StdRepo.ExcuteStoredProcedureToSave<Series>(GlobalSPNames.SaveSeries, modelVM, action);
             }
             catch (Exception ex)
             {

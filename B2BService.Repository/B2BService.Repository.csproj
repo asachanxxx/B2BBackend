@@ -69,6 +69,7 @@
     <Compile Include="SystemRepositories\BrandandModelRepository.cs" />
     <Compile Include="SystemRepositories\CategoryRepository.cs" />
     <Compile Include="SystemRepositories\ProductRepository.cs" />
+    <Compile Include="SystemRepositories\SpecRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

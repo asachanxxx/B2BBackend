@@ -26,13 +26,15 @@ namespace B2BService.Data
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductImages> ProductImage { get; set; }
         public DbSet<ProductReviews> ProductReview { get; set; }
-        public DbSet<ProductSpecDetail> ProductSpecDetail { get; set; }
         public DbSet<WarrentyType> WarrentyType { get; set; }
         public DbSet<SupplierWarrenty> SupplierWarrenty { get; set; }
         public DbSet<SpecialProducts> SpecialProduct { get; set; }
         public DbSet<SpecMaster> SpecMaster { get; set; }
         public DbSet<SpecDetail> SpecDetail { get; set; }
         public DbSet<SpecItem> SpecItem { get; set; }
+        public DbSet<SpecProductDetails> SpecProductDetails { get; set; }
+
+        
         public DbSet<SupplierProducts> SupplierProduct { get; set; }
 
         public DbSet<Level1> Level1 { get; set; }

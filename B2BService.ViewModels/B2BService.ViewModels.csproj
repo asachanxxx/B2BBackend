@@ -58,11 +58,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Product\CatelogDataFeedVM.cs" />
     <Compile Include="Product\CatelogItemsVM.cs" />
     <Compile Include="Product\CatelogProductVM.cs" />
+    <Compile Include="Product\CatelogSearchVM.cs" />
     <Compile Include="Product\LevelVMs.cs" />
+    <Compile Include="Product\ProductSearchVM.cs" />
+    <Compile Include="Product\ProductsForCatelogVM.cs" />
     <Compile Include="Product\ProductVM.cs" />
     <Compile Include="Product\SearchVM.cs" />
+    <Compile Include="Product\SubCatVM.cs" />
+    <Compile Include="Product\SupplierBundleVM.cs" />
     <Compile Include="UserOrganisazionVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

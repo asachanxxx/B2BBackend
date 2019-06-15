@@ -73,6 +73,7 @@
     <Compile Include="Inventory\Series.cs" />
     <Compile Include="Inventory\SpecialProducts.cs" />
     <Compile Include="Inventory\SpecItems.cs" />
+    <Compile Include="Inventory\SpecProductDetails.cs" />
     <Compile Include="Inventory\SupplierProducts.cs" />
     <Compile Include="Inventory\SupplierWarrenty.cs" />
     <Compile Include="Inventory\WarrentyType.cs" />
@@ -80,7 +81,6 @@
     <Compile Include="Level1.cs" />
     <Compile Include="Level2.cs" />
     <Compile Include="Level3.cs" />
-    <Compile Include="Inventory\ProductSpecDetail.cs" />
     <Compile Include="Log\Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Inventory\SpecDetail.cs" />

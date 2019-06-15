@@ -17,14 +17,21 @@ namespace B2BService.Unitilities
         public static string CatelogProductSearchSPName { get; set; } = "SP_PRO_CatelogProductSearch";
         public static string AddBrandSPName { get; set; } = "SP_PRO_AddBrand";
         public static string AddModelSPName { get; set; } = "SP_PRO_AddModel";
-        public static string AddSpecMasterSPName { get; set; } = "SP_PRO_AddSpecMaster";
-        public static string UpdateSpecMasterSPName { get; set; } = "SP_PRO_UpdatepecMaster";
+        public static string SaveSpecMasterSPName { get; set; } = "SP_PRO_AddSpecMaster";
+        public static string SaveSpecItemSPName { get; set; } = "SP_PRO_AddSpecItem";
+        public static string SaveSpecItemSPNameBulk { get; set; } = "SP_PRO_AddSpecItemBulk";
+        public static string SaveSpecDetails{ get; set; } = "SP_PRO_SaveSpecDetails";
+        public static string SaveSpecProductDetails { get; set; } = "SP_PRO_SaveSpecProductDetails";
+        public static string GetDataForSubCategoryView { get; set; } = "SP_PRO_GetDataForSubCategoryView";
+        public static string SaveModel { get; set; } = "SP_PRO_SaveModel";
+        public static string SaveBrand { get; set; } = "SP_PRO_SaveBrand";
+        public static string SaveSeries { get; set; } = "SP_PRO_SaveSeries";
+        public static string GetCatelogDataFeedSP { get; set; } = "SP_PRO_GetCatelogDataFeedSP";
+        public static string GetProductForCatelogSerachResultSP { get; set; } = "SP_PRO_GetProductForCatelogSerachResultSP";
+        public static string AddSupplierPriceForProductSPName { get; set; } = "SP_PRO_AddSupplierPriceForProductSP";
+        public static string SearchExistingProductSPName { get; set; } = "SP_PRO_SearchExistingProductSP";
+        public static string DuplicateProductSPName { get; set; } = "SP_PRO_DuplicateProductSP";
+
         
-        public static string AddSpecDetailsSPName { get; set; } = "SP_PRO_AddSpecDetails";
-        public static string AddProductSpecDetailsSPName { get; set; } = "SP_PRO_AddProductSpecDetails";
-
-
-
-
     }
 }

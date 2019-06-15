@@ -7,7 +7,15 @@ using System.Threading.Tasks;
 
 namespace B2BService.ViewModels.Product
 {
-    public class ProductVM: BaseClass
+
+    public class ProductSaveVM : BaseClass
+    {
+        public ProductVM Product { get; set; }
+        public IEnumerable<SpecItemsVM> SpecItems { get; set; }
+        public SupplierBundleVM SupplierWarrenty { get; set; }
+    }
+
+    public class ProductVM
     {
         public int Id { get; set; }
         public string ProductCode { get; set; }
@@ -29,5 +37,13 @@ namespace B2BService.ViewModels.Product
         public string DefaultImagePath { get; set; }
         public bool AddedByASeller { get; set; }
         public string AddedSellerID { get; set; }
+    }
+
+    public class SpecItemsVM {
+        public int SpecItemId { get; set; }
+        public string SpecItemName { get; set; }
+        public string SpecItemDisplayName { get; set; }
+        public string DataType { get; set; }
+        public string Value { get; set; }
     }
 }

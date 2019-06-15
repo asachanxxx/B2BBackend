@@ -1,11 +1,8 @@
 ﻿using B2BService.Domain;
 using B2BService.Domain.Inventory;
 using B2BService.Repository;
-using B2BService.Repository.SellerRepositories;
 using B2BService.Repository.SystemRepositories;
 using B2BService.Service.HelperClasses;
-using B2BService.ViewModels;
-using B2BService.ViewModels.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,175 +12,194 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
-namespace B2BService.Service.Controllers.SellerControllers
+namespace B2BService.Service.Controllers.SystemControllers
 {
-
-    [RoutePrefix("Product")]
+    [RoutePrefix("Spec")]
     [Authorize]
-    public class ProductController : ApiController
+    public class SpecController : ApiController
     {
 
-        ProductRepository corepo;
+        SpecRepository corepo;
+
+        public SpecController()
+        {
+            corepo = new SpecRepository();
+        }
+
+
+
+        [Route("SaveSpecMaster")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> SaveSpecMaster(SpecMaster modelVM)
+        {
+            try
+            {
+
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.SaveSpecMaster(modelVM));
+
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+
+        [Route("SaveSpecItemMulti")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> SaveSpecItem(List<SpecItem> modelVM)
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                if (modelVM != null)
+                {
+                    modelVM.ForEach(x => x.IpAddress = clientAddress);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.SaveSpecItem(modelVM));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [Route("SaveSpecItemSingle")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> SaveSpecItem(SpecItem modelVM)
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                modelVM.IpAddress = clientAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.SaveSpecItem(modelVM));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+
+
+        [Route("SaveSpecDetails")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> SaveSpecDetails(List<SpecDetail> modelVM)
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.SaveSpecDetails(modelVM));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+
+
+        [Route("SaveProductSpecDetails")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> SaveProductSpecDetails(List<SpecDetail> modelVM)
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.SaveSpecDetails(modelVM));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+
+        [Route("GetAllSpecMaster")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetAllSpecMaster()
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetAllSpecMaster());
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [Route("GetAllSpecItems")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetAllSpecItems()
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetAllSpecItems());
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [Route("GetAllSpecDetailsForMAster")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetAllSpecDetailsForMAster(int MasterId)
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetAllSpecDetailsForMAster(MasterId));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+
+        [Route("GetAllSpecProductDetails")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetAllSpecProductDetails(int ProductId)
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetAllSpecProductDetails(ProductId));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+
         
-        public ProductController()
-        {
-            corepo = new ProductRepository();
-        }
 
 
-
-        [Route("SaveCatelog")]
-        [HttpPost]
-        public async Task<HttpResponseMessage> SaveCatelog(CateglogProducts modelVM, int action)
-        {
-            try
-            {
-                string username = RequestContext.Principal.Identity.Name;
-                string clientAddress = HttpContext.Current.Request.UserHostAddress;
-                return Request.CreateResponse(HttpStatusCode.OK, await corepo.SaveCatelog(modelVM));
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
-            }
-        }
-
-        [Route("SearchCatelogItems")]
-        [HttpGet]
-        public async Task<HttpResponseMessage> SearchCatelogItems(SearchVM modelVM)
-        {
-            try
-            {
-                string username = RequestContext.Principal.Identity.Name;
-                string clientAddress = HttpContext.Current.Request.UserHostAddress;
-                return Request.CreateResponse(HttpStatusCode.OK, await corepo.SearchCatelogItems(modelVM));
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
-            }
-        }
-
-        [Route("GetCatelogDataFeed")]
-        [HttpGet]
-        public async Task<HttpResponseMessage> GetCatelogDataFeed()
-        {
-            try
-            {
-                string username = RequestContext.Principal.Identity.Name;
-                string clientAddress = HttpContext.Current.Request.UserHostAddress;
-                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetCatelogDataFeed());
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
-            }
-        }
-
-        [Route("GetCatelogDataFeed")]
-        [HttpGet]
-        public async Task<HttpResponseMessage> SearchCatelogItems(CatelogDataFeedVM Model)
-        {
-            try
-            {
-                string username = RequestContext.Principal.Identity.Name;
-                string clientAddress = HttpContext.Current.Request.UserHostAddress;
-                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetCatelogDataFeed());
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
-            }
-        }
-
-        [Route("GetProductForCatelogSerachResult")]
-        [HttpGet]
-        public async Task<HttpResponseMessage> GetProductForCatelogSerachResult(int CatelogId)
-        {
-            try
-            {
-                string username = RequestContext.Principal.Identity.Name;
-                string clientAddress = HttpContext.Current.Request.UserHostAddress;
-                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetProductForCatelogSerachResult(CatelogId));
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
-            }
-        }
-
-        [Route("GetAllWarrentyTypes")]
-        [HttpGet]
-        public async Task<HttpResponseMessage> GetAllWarrentyTypes()
-        {
-            try
-            {
-                string username = RequestContext.Principal.Identity.Name;
-                string clientAddress = HttpContext.Current.Request.UserHostAddress;
-                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetAllWarrentyTypes());
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
-            }
-        }
-
-        [Route("AddSupplierPriceForProduct")]
-        [HttpPost]
-        public async Task<HttpResponseMessage> AddSupplierPriceForProduct(SupplierBundleVM Model)
-        {
-            try
-            {
-                string username = RequestContext.Principal.Identity.Name;
-                string clientAddress = HttpContext.Current.Request.UserHostAddress;
-                return Request.CreateResponse(HttpStatusCode.OK, await corepo.AddSupplierPriceForProduct(Model));
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
-            }
-        }
-
-        [Route("SearchExistingProduct")]
-        [HttpGet]
-        public async Task<HttpResponseMessage> SearchExistingProduct(ProductSearchVM Model)
-        {
-            try
-            {
-                string username = RequestContext.Principal.Identity.Name;
-                string clientAddress = HttpContext.Current.Request.UserHostAddress;
-                return Request.CreateResponse(HttpStatusCode.OK, await corepo.SearchExistingProduct(Model));
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
-            }
-        }
-
-        [Route("DuplicateProduct")]
-        [HttpGet]
-        public async Task<HttpResponseMessage> DuplicateProduct(int ProductId)
-        {
-            try
-            {
-                string username = RequestContext.Principal.Identity.Name;
-                string clientAddress = HttpContext.Current.Request.UserHostAddress;
-                return Request.CreateResponse(HttpStatusCode.OK, await corepo.DuplicateProduct(ProductId));
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
-            }
-        }
 
     }
 }

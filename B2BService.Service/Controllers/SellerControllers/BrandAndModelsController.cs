@@ -14,7 +14,7 @@ using System.Web.Http;
 
 namespace B2BService.Service.Controllers.SellerControllers
 {
-    [RoutePrefix("brandandmodels")]
+    [RoutePrefix("BrandAndModels")]
     [Authorize]
     public class BrandAndModelsController : ApiController
     {
@@ -29,27 +29,23 @@ namespace B2BService.Service.Controllers.SellerControllers
        
 
 
-        [Route("AddBrand")]
+        [Route("SaveBrand")]
         [HttpPost]
-        public async Task<HttpResponseMessage> AddBrand(Brand modelVM,int action)
+        public async Task<HttpResponseMessage> SaveBrand(Brand modelVM,[FromUri]int action)
         {
-            RepoBase<Brand> specmaster;
-
             try
             {
-                specmaster = new RepoBase<Brand>("Brands");
-
-                //if update command passing to the controller check if exists
-                if (modelVM != null)
-                {
-                    if (await specmaster.FindExistance("Name", modelVM.Name.Trim())) {
-                        return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "This Brand already exists!");
-                    }
-                }
-
                 string username = RequestContext.Principal.Identity.Name;
                 string clientAddress = HttpContext.Current.Request.UserHostAddress;
-                return Request.CreateResponse(HttpStatusCode.OK, await corepo.AddBrand(modelVM));
+
+                //for (int i = 0; i < 1000; i++)
+                //{
+                //    modelVM.Name = "Brand " + i.ToString();
+                //    await corepo.SaveBrand(modelVM, action);
+                //}
+
+                modelVM.IpAddress = clientAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.SaveBrand(modelVM, action));
             }
             catch (Exception ex)
             {
@@ -58,25 +54,35 @@ namespace B2BService.Service.Controllers.SellerControllers
             }
         }
 
-        [Route("AddModel")]
+        [Route("SaveModel")]
         [HttpPost]
-        public async Task<HttpResponseMessage> AddModel(Model modelVM, int action)
+        public async Task<HttpResponseMessage> SaveModel(Model modelVM, [FromUri] int action)
         {
-            RepoBase<Model> specmaster;
-
             try
             {
-                specmaster= new RepoBase<Model>("Models");
-                //if update command passing to the controller check if exists
-                if (modelVM != null) {
-                    if ( await specmaster.FindExistance("Name", modelVM.Name)){
-                        return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "This Model already exists!");
-                    }
-                }
-
                 string username = RequestContext.Principal.Identity.Name;
                 string clientAddress = HttpContext.Current.Request.UserHostAddress;
-                return Request.CreateResponse(HttpStatusCode.OK, await corepo.AddModel(modelVM));
+                modelVM.IpAddress = clientAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.SaveModel(modelVM, action));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+
+        [Route("SaveSeries")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> SaveSeries(Series modelVM, [FromUri] int action)
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                modelVM.IpAddress = clientAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.SaveSeries(modelVM, action));
             }
             catch (Exception ex)
             {
@@ -125,7 +131,24 @@ namespace B2BService.Service.Controllers.SellerControllers
             }
         }
 
-
+        [Route("GetAllSeries")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetAllSeries()
+        {
+            RepoBase<Series> specmaster;
+            try
+            {
+                specmaster = new RepoBase<Series>("Series");
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse<IEnumerable<Series>>(HttpStatusCode.OK, await specmaster.FindALL());
+            }
+            catch (Exception ex)
+            {
+                specmaster = null;
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
 
     }
 }

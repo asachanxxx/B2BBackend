@@ -39,7 +39,7 @@ namespace B2BService.Repository
             }
         }
 
-        public async Task<int> ExcuteStoredProcedureToSave<T>(string SPName,T Object) where T : class
+        public async Task<int> ExcuteStoredProcedureToSave<T>(string SPName,T Object,int action) where T : class
         {
             try
             {
@@ -48,10 +48,79 @@ namespace B2BService.Repository
                 {
                     DynamicParameters parameter = new DynamicParameters();
                     parameter.Add("@XMLSQL", xmlperson, DbType.String, ParameterDirection.Input);
+                    parameter.Add("@Action", action, DbType.Int32, ParameterDirection.Input);
                     parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
                     await db.ExecuteAsync(SPName, parameter,commandType: CommandType.StoredProcedure);
                     int rowCount = parameter.Get<int>("@Status");
                     return rowCount;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public async Task<IEnumerable<T>> ExcuteStoredProcedureToSave<T>(string SPName, int obj) where T : class
+        {
+            try
+            {
+                using (IDbConnection db = Conn)
+                {
+                    DynamicParameters parameter = new DynamicParameters();
+                    parameter.Add("@Obj", obj, DbType.Int32, ParameterDirection.Input);
+                    parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                    return await db.QueryAsync<T>(SPName, parameter, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        /// <summary>
+        /// To excite a given sp and return single instance of the object of type T. without passing any parameters
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="SPName">Stored Procedure to exute</param>
+        /// <returns></returns>
+        public async Task<T> QueryStoredProcedure<T>(string SPName) where T : class
+        {
+            try
+            {
+                using (IDbConnection db = Conn)
+                {
+                    DynamicParameters parameter = new DynamicParameters();
+                    parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                    return await db.QuerySingleOrDefaultAsync<T>(SPName, parameter, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        // <summary>
+        /// To excite a given sp and return single instance of the object of type T. with passign parameters
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="SPName">Stored Procedure to exute</param>
+        /// <returns></returns>
+        public async Task<T> QueryStoredProcedure<T>(string SPName ,int obj) where T : class
+        {
+            try
+            {
+                using (IDbConnection db = Conn)
+                {
+                    DynamicParameters parameter = new DynamicParameters();
+                    parameter.Add("@Obj", obj, DbType.Int32, ParameterDirection.Input);
+                    parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                    return await db.QuerySingleOrDefaultAsync<T>(SPName, parameter, commandType: CommandType.StoredProcedure);
                 }
             }
             catch (Exception ex)
@@ -89,5 +158,25 @@ namespace B2BService.Repository
             }
         }
 
+        public async Task<int> ExcuteStoredProcedureToSave<T>(string SPName, T Object) where T : class
+        {
+            try
+            {
+                var xmlperson = XMLTools.ObjectToXMLGeneric<T>(Object);
+                using (IDbConnection db = Conn)
+                {
+                    DynamicParameters parameter = new DynamicParameters();
+                    parameter.Add("@XMLSQL", xmlperson, DbType.String, ParameterDirection.Input);
+                    parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                    await db.ExecuteAsync(SPName, parameter, commandType: CommandType.StoredProcedure);
+                    int rowCount = parameter.Get<int>("@Status");
+                    return rowCount;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
