@@ -49,6 +49,45 @@ namespace B2BService.Service.Controllers.SellerControllers
             }
         }
 
+
+
+        [Route("SaveProduct")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> SaveProduct(ProductSaveVM modelVM, int action)
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.AddProduct(modelVM));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+
+        [Route("GetAllCatelogItems")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> SearchCatelogItems()
+        {
+            RepoBase<CateglogProducts> repo;
+            try
+            {
+                repo = new RepoBase<CateglogProducts>("CateglogProducts");
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await repo.FindALL());
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
         [Route("SearchCatelogItems")]
         [HttpGet]
         public async Task<HttpResponseMessage> SearchCatelogItems(SearchVM modelVM)

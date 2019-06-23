@@ -50,6 +50,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,6 +64,7 @@
     <Compile Include="Product\CatelogProductVM.cs" />
     <Compile Include="Product\CatelogSearchVM.cs" />
     <Compile Include="Product\LevelVMs.cs" />
+    <Compile Include="Product\MegaMenuVm.cs" />
     <Compile Include="Product\ProductSearchVM.cs" />
     <Compile Include="Product\ProductsForCatelogVM.cs" />
     <Compile Include="Product\ProductVM.cs" />

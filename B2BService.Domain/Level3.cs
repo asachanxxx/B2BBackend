@@ -15,5 +15,6 @@ namespace B2BService.Domain
         public string Level3Name { get; set; }
         public int NoOfClicks { get; set; }
         public int NoOfImpressions { get; set; }
+        public int SpecMasterId { get; set; }
     }
 }

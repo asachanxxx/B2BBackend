@@ -30,7 +30,7 @@ namespace B2BService.Service.Controllers.SystemControllers
 
         [Route("SaveSpecMaster")]
         [HttpPost]
-        public async Task<HttpResponseMessage> SaveSpecMaster(SpecMaster modelVM)
+        public async Task<HttpResponseMessage> SaveSpecMaster(SpecMaster modelVM, int action)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace B2BService.Service.Controllers.SystemControllers
 
         [Route("SaveSpecItemMulti")]
         [HttpPost]
-        public async Task<HttpResponseMessage> SaveSpecItem(List<SpecItem> modelVM)
+        public async Task<HttpResponseMessage> SaveSpecItem(List<SpecItem> modelVM, int action)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace B2BService.Service.Controllers.SystemControllers
 
         [Route("SaveSpecItemSingle")]
         [HttpPost]
-        public async Task<HttpResponseMessage> SaveSpecItem(SpecItem modelVM)
+        public async Task<HttpResponseMessage> SaveSpecItem(SpecItem modelVM , int action)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace B2BService.Service.Controllers.SystemControllers
 
         [Route("SaveSpecDetails")]
         [HttpPost]
-        public async Task<HttpResponseMessage> SaveSpecDetails(List<SpecDetail> modelVM)
+        public async Task<HttpResponseMessage> SaveSpecDetails(List<SpecDetail> modelVM, int action)
         {
             try
             {
@@ -111,7 +111,7 @@ namespace B2BService.Service.Controllers.SystemControllers
 
         [Route("SaveProductSpecDetails")]
         [HttpPost]
-        public async Task<HttpResponseMessage> SaveProductSpecDetails(List<SpecDetail> modelVM)
+        public async Task<HttpResponseMessage> SaveProductSpecDetails(List<SpecDetail> modelVM, int action)
         {
             try
             {
