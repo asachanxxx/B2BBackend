@@ -21,14 +21,16 @@ namespace B2BBackend.UltimateTester
 
         private void btn_checklog_Click(object sender, EventArgs e)
         {
-            Log log = new Log();
-            log.CLIENT_IP = "192.168.1.150";
-            log.CLIENT_PORT = "1528";
-            log.CPU_TIME = DateTime.Now;
-            log.LOG_DATE = DateTime.Now;
-            log.MESSAGE = "First message from log system";
-            log.STACK_TRACE = "";
-            log.USER_ID = "52407f97-97b7-4dea-a550-8465bf811ec2";
+            var log = new Log
+            {
+                CLIENT_IP = "192.168.1.150",
+                CLIENT_PORT = "1528",
+                CPU_TIME = DateTime.Now,
+                LOG_DATE = DateTime.Now,
+                MESSAGE = "First message from log system",
+                STACK_TRACE = "",
+                USER_ID = "52407f97-97b7-4dea-a550-8465bf811ec2"
+            };
 
             LogRepository logrepo = new LogRepository();
             logrepo.AddLogEntry(log);
