@@ -12,12 +12,12 @@ namespace B2BService.ViewModels.Product
         public string Subcategory1Name { get; set; }
         public string ImageUrl { get; set; }
 
-        public IEnumerable<Subcat2View> Details { get; set; }
+        public List<Subcat2View> Details { get; set; }
     }
 
     public class Subcat2View
     {
-
+        public int Subcategory1Id { get; set; }
         public int Subcategory2Id { get; set; }
         public string Subcategory2Name { get; set; }
     }
