@@ -130,7 +130,7 @@ namespace B2BService.Service.Controllers
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -263,9 +263,9 @@ namespace B2BService.Service.Controllers
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -415,7 +415,7 @@ namespace B2BService.Service.Controllers
             result = await UserManager.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
             {
-                return GetErrorResult(result); 
+                return GetErrorResult(result);
             }
             return Ok();
         }
@@ -430,6 +430,33 @@ namespace B2BService.Service.Controllers
 
             base.Dispose(disposing);
         }
+
+        [Route("CheckToekn")]
+        [HttpGet]
+        public async Task<IHttpActionResult> CheckToekn()
+        {
+            return Ok(await Task.FromResult<string>("Pass"));
+        }
+
+        [Route("FindUser")]
+        [HttpGet]
+        public async Task<IHttpActionResult> FindUser(string username, string password)
+        {
+            try
+            {
+                AuthRepository repo = new AuthRepository();
+                var user = await repo.FindUser(username, password);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+
+
+
 
         #region Helpers
 

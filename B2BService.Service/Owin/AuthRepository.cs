@@ -56,7 +56,7 @@ namespace B2BService.Service.Owin
             if (result.Succeeded)
             {
                 CoparateReporitory corprepo = new CoparateReporitory();
-               // await corprepo.AddOrganization(userModel);
+              // await corprepo.AddOrganization(userModel);
             }
             
             return result;
