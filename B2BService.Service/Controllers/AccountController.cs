@@ -446,6 +446,9 @@ namespace B2BService.Service.Controllers
             {
                 AuthRepository repo = new AuthRepository();
                 var user = await repo.FindUser(username, password);
+                if (user == null) {
+                    return InternalServerError(new Exception("Invalied username or password!"));
+                }
                 return Ok(user);
             }
             catch (Exception ex)

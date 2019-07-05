@@ -23,7 +23,8 @@ namespace B2BService.Service.Owin
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/owin/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(100),
+                //AccessTokenExpireTimeSpan = TimeSpan.FromDays(100),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(5),
                 Provider = provider
 
             };

@@ -27,6 +27,8 @@ namespace B2BService.Domain.Inventory
         public decimal SupplierPrice { get; set; }
         public decimal ProductPrice { get; set; }
         public string DefaultImagePath { get; set; }
+        public string ReferenceLink { get; set; }
+        public string ProductWebLink { get; set; }
         /// <summary>
         /// When getting the item list filter using IsApproved =True
         /// </summary>
