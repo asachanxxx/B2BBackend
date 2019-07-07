@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Organisazion\UserInObject.cs" />
     <Compile Include="Product\CatelogDataFeedVM.cs" />
     <Compile Include="Product\CatelogItemsVM.cs" />
     <Compile Include="Product\CatelogProductVM.cs" />
