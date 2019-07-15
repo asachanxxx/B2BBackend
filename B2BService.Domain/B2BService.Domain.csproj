@@ -63,9 +63,12 @@
     <Compile Include="Comunication\SystemTasks.cs" />
     <Compile Include="Coparate\Organization.cs" />
     <Compile Include="Coparate\User.cs" />
+    <Compile Include="Inventory\BestSellProducts.cs" />
     <Compile Include="Inventory\Brand.cs" />
     <Compile Include="Inventory\CateglogProducts.cs" />
+    <Compile Include="Inventory\FeatureProducts.cs" />
     <Compile Include="Inventory\Model.cs" />
+    <Compile Include="Inventory\NewArrivalProduct.cs" />
     <Compile Include="Inventory\Product.cs" />
     <Compile Include="Inventory\ProductImages.cs" />
     <Compile Include="Inventory\ProductInterests.cs" />

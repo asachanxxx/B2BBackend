@@ -138,6 +138,61 @@ namespace B2BService.Service.Controllers.SellerControllers
             }
         }
 
+        [Route("GetAllSubCategoriesForMegaView")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetAllSubCategoriesForMegaView(int categoryId)
+        { 
+            try
+            {
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse<IEnumerable<SubCatVM>>(HttpStatusCode.OK, await corepo.GetAllSubCategoriesForMegaView(categoryId));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [Route("GetAllSubCategor2sUsingID")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetAllSubCategor2s(int SubCat2Id)
+        {
+            RepoBase<Level3> specmaster;
+            try
+            {
+                specmaster = new RepoBase<Level3>("Level3");
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse<Level3>(HttpStatusCode.OK, await specmaster.Find(SubCat2Id));
+            }
+            catch (Exception ex)
+            {
+                specmaster = null;
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+
+        [Route("GetAllSubCategorsUsingID")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetAllSubCategorsUsingID(int SubCatId)
+        {
+            RepoBase<Level2> specmaster;
+            try
+            {
+                specmaster = new RepoBase<Level2>("Level2");
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse<Level2>(HttpStatusCode.OK, await specmaster.Find(SubCatId));
+            }
+            catch (Exception ex)
+            {
+                specmaster = null;
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
 
         /*
          List of all the Routes

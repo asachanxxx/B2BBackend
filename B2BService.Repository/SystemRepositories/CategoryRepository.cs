@@ -62,7 +62,7 @@ namespace B2BService.Repository.SystemRepositories
             }
         }
 
-        public async Task<List<SubCatVM>> GetDataForSubCategoryView(int CategoryId)
+        public async Task<List<SubCatVM>> GetAllSubCategoriesForMegaView(int CategoryId)
         {
             try
             {

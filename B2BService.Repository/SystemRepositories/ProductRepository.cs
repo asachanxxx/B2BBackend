@@ -2,8 +2,11 @@
 using B2BService.Domain.Inventory;
 using B2BService.Unitilities;
 using B2BService.ViewModels.Product;
+using Dapper;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,10 +16,12 @@ namespace B2BService.Repository.SystemRepositories
     public class ProductRepository
     {
         public readonly StandAloneRepository StdRepo;
-
+        public readonly IDbConnection Conn;
         public ProductRepository()
         {
             StdRepo = new StandAloneRepository();
+            Conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SysConn"].ConnectionString);
+
         }
 
         /// <summary>
@@ -29,7 +34,7 @@ namespace B2BService.Repository.SystemRepositories
         {
             try
             {
-                return await StdRepo.QueryStoredProcedure<SearchVM, CateglogProducts> (GlobalSPNames.CatelogProductSearchSPName, modelVM);
+                return await StdRepo.QueryStoredProcedure<SearchVM, CateglogProducts>(GlobalSPNames.CatelogProductSearchSPName, modelVM);
             }
             catch (Exception ex)
             {
@@ -159,6 +164,142 @@ namespace B2BService.Repository.SystemRepositories
                 throw ex;
             }
         }
+
+
+        public async Task<List<ProductVMNew>> GetBestSellProducts()
+        {
+            try
+            {
+                ProductVMNew outpro = new ProductVMNew();
+                using (IDbConnection db = Conn)
+                {
+                    DynamicParameters parameter = new DynamicParameters();
+                    parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+
+                    var orderDictionary = new Dictionary<int, ProductVMNew>();
+                    var list = db.Query<ProductVMNew, features, ProductVMNew>(
+                        GlobalSPNames.BestSellProductSPName,
+                        (Pro, Fe) =>
+                        {
+                            ProductVMNew orderEntry;
+
+                            if (!orderDictionary.TryGetValue(Pro.id, out orderEntry))
+                            {
+                                orderEntry = Pro;
+                                orderEntry.features = new List<features>();
+                                orderDictionary.Add(orderEntry.id, orderEntry);
+                            }
+
+                            orderEntry.features.Add(Fe);
+                            return orderEntry;
+                        },
+                        splitOn: "id", param: parameter, commandType: CommandType.StoredProcedure)
+                    .Distinct()
+                    .ToList();
+
+                    list.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
+                    list.ForEach(x => x.images = new List<string>());
+
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<ProductVMNew>> GetFeatureProducts()
+        {
+            try
+            {
+                ProductVMNew outpro = new ProductVMNew();
+                using (IDbConnection db = Conn)
+                {
+                    DynamicParameters parameter = new DynamicParameters();
+                    parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+
+                    var orderDictionary = new Dictionary<int, ProductVMNew>();
+                    var list = db.Query<ProductVMNew, features, ProductVMNew>(
+                        GlobalSPNames.FeatureProductsSPName,
+                        (Pro, Fe) =>
+                        {
+                            ProductVMNew orderEntry;
+
+                            if (!orderDictionary.TryGetValue(Pro.id, out orderEntry))
+                            {
+                                orderEntry = Pro;
+                                orderEntry.features = new List<features>();
+                                orderDictionary.Add(orderEntry.id, orderEntry);
+                            }
+
+                            orderEntry.features.Add(Fe);
+                            return orderEntry;
+                        },
+                        splitOn: "id", param: parameter, commandType: CommandType.StoredProcedure)
+                    .Distinct()
+                    .ToList();
+
+                    list.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
+                    list.ForEach(x => x.images = new List<string>() { "http://localhost/images/ProductImg_Init/"+x.id +".jpg", "http://localhost/images/ProductImg_Init/" + x.id + ".jpg" });
+
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<ProductVMNew>> GetNewArrivalProduct()
+        {
+            try
+            {
+                ProductVMNew outpro = new ProductVMNew();
+                using (IDbConnection db = Conn)
+                {
+                    DynamicParameters parameter = new DynamicParameters();
+                    parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+
+                    var orderDictionary = new Dictionary<int, ProductVMNew>();
+                    var list = db.Query<ProductVMNew, features, ProductVMNew>(
+                        GlobalSPNames.NewArrivalProductSPName,
+                        (Pro, Fe) =>
+                        {
+                            ProductVMNew orderEntry;
+
+                            if (!orderDictionary.TryGetValue(Pro.id, out orderEntry))
+                            {
+                                orderEntry = Pro;
+                                orderEntry.features = new List<features>();
+                                orderDictionary.Add(orderEntry.id, orderEntry);
+                            }
+
+                            orderEntry.features.Add(Fe);
+                            return orderEntry;
+                        },
+                        splitOn: "id", param: parameter, commandType: CommandType.StoredProcedure)
+                    .Distinct()
+                    .ToList();
+
+                    list.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
+                    list.ForEach(x => x.images = new List<string>() );
+
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+       
+
 
 
     }

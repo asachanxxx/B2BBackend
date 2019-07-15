@@ -32,6 +32,9 @@ namespace B2BService.Unitilities
         public static string SearchExistingProductSPName { get; set; } = "SP_PRO_SearchExistingProductSP";
         public static string DuplicateProductSPName { get; set; } = "SP_PRO_DuplicateProductSP";
 
-        
+        public static string FeatureProductsSPName { get; set; } = "SP_Get_FeatureProducts";
+        public static string NewArrivalProductSPName { get; set; } = "SP_Get_NewArrivalProduct";
+        public static string BestSellProductSPName { get; set; } = "SP_Get_BestSellProduct";
+
     }
 }

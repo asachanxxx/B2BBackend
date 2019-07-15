@@ -46,4 +46,34 @@ namespace B2BService.ViewModels.Product
         public string DataType { get; set; }
         public string Value { get; set; }
     }
+
+
+    public class ProductVMNew
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public decimal price { get; set; }
+        public decimal compareAtPrice { get; set; }
+        public int rating { get; set; }
+        public int reviews { get; set; }
+        public string availability { get; set; } = "in-stock";
+        public List<features> features { get; set; }
+        public List<string> images { get; set; }
+        public List<string> badges { get; set; }
+    }
+
+
+    public class features {
+        public int Id { get; set; }
+        public string fname { get; set; }
+        public string fvalue { get; set; }
+    }
+
+    public class StringPar
+    {
+        public string fname { get; set; }
+        
+    }
+
+
 }

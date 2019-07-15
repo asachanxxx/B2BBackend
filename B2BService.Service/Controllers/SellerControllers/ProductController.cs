@@ -224,5 +224,59 @@ namespace B2BService.Service.Controllers.SellerControllers
             }
         }
 
+        [Route("GetBestSellProducts")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetBestSellProducts()
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetBestSellProducts());
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+
+        [Route("GetFeatureProducts")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetFeatureProducts()
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetFeatureProducts());
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [Route("GetNewArrivalProduct")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetNewArrivalProduct()
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetNewArrivalProduct());
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+
+
     }
 }

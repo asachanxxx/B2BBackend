@@ -45,7 +45,11 @@ namespace B2BService.Data
         public DbSet<Model> Model { get; set; }
         public DbSet<Series> Series { get; set; }
 
-        
-        
+
+        public DbSet<BestSellProduct> BestSellProduct { get; set; }
+        public DbSet<NewArrivalProduct> NewArrivalProduct { get; set; }
+        public DbSet<FeatureProducts> FeatureProducts { get; set; }
+
+
     }
 }
