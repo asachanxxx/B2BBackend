@@ -261,11 +261,13 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BuyerControllers\MainPageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SellerControllers\BrandAndModelsController.cs" />
     <Compile Include="Controllers\SellerControllers\CategoryController.cs" />
     <Compile Include="Controllers\SellerControllers\CorparateController.cs" />
     <Compile Include="Controllers\SellerControllers\ProductController.cs" />
+    <Compile Include="Controllers\SystemControllers\ItemsController.cs" />
     <Compile Include="Controllers\SystemControllers\SpecController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -349,7 +351,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\BuyerControllers\" />
     <Folder Include="Controllers\ManagerControllers\" />
   </ItemGroup>
   <ItemGroup>

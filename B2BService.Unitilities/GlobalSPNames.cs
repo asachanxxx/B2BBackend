@@ -34,6 +34,10 @@ namespace B2BService.Unitilities
 
         public static string FeatureProductsSPName { get; set; } = "SP_Get_FeatureProducts";
         public static string NewArrivalProductSPName { get; set; } = "SP_Get_NewArrivalProduct";
+        public static string NewArrivalProductSingleSPName { get; set; } = "SP_Get_NewArrivalProductSingle";
+        
+
+
         public static string BestSellProductSPName { get; set; } = "SP_Get_BestSellProduct";
 
     }

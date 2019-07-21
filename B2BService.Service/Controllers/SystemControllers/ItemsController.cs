@@ -1,10 +1,8 @@
 ﻿using B2BService.Domain;
 using B2BService.Domain.Inventory;
 using B2BService.Repository;
-using B2BService.Repository.SellerRepositories;
 using B2BService.Repository.SystemRepositories;
 using B2BService.Service.HelperClasses;
-using B2BService.ViewModels;
 using B2BService.ViewModels.Product;
 using System;
 using System.Collections.Generic;
@@ -15,22 +13,18 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
-namespace B2BService.Service.Controllers.SellerControllers
+namespace B2BService.Service.Controllers.SystemControllers
 {
-
-    [RoutePrefix("Product2")]
+    [RoutePrefix("Items")]
     [Authorize]
-    public class ProductController : ApiController
+    public class ItemsController : ApiController
     {
-
         ProductRepository corepo;
-        
-        public ProductController()
+
+        public ItemsController()
         {
             corepo = new ProductRepository();
         }
-
-
 
         [Route("SaveCatelog")]
         [HttpPost]
@@ -223,10 +217,5 @@ namespace B2BService.Service.Controllers.SellerControllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
-
-     
-
-        
-
     }
 }

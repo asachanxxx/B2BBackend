@@ -38,20 +38,20 @@ namespace B2BBackend.UltimateTester
         {
             this.Invoke((MethodInvoker)delegate ()
             {
-                var task = repo.GetDataForSubCategoryView(int.Parse(comboBox1.SelectedValue.ToString())).Result.ToList();
-                foreach (var item in task)
-                {
+                //var task = repo.GetDataForSubCategoryView(int.Parse(comboBox1.SelectedValue.ToString())).Result.ToList();
+                //foreach (var item in task)
+                //{
                   
-                    TreeNode node = new TreeNode();
-                    node.Text = item.Subcategory1Name;
-                    node.Name = item.Subcategory1Id.ToString();
-                    foreach (var item1 in item.Details)
-                    {
-                        node.Nodes.Add(item1.Subcategory2Id.ToString(),  item1.Subcategory2Name);
-                    }
+                //    TreeNode node = new TreeNode();
+                //    node.Text = item.Subcategory1Name;
+                //    node.Name = item.Subcategory1Id.ToString();
+                //    foreach (var item1 in item.Details)
+                //    {
+                //        node.Nodes.Add(item1.Subcategory2Id.ToString(),  item1.Subcategory2Name);
+                //    }
 
-                    treeView1.Nodes.Add(node);
-                }
+                //    treeView1.Nodes.Add(node);
+                //}
             });
 
             
