@@ -70,12 +70,14 @@
     <Compile Include="Inventory\Model.cs" />
     <Compile Include="Inventory\NewArrivalProduct.cs" />
     <Compile Include="Inventory\Product.cs" />
+    <Compile Include="Inventory\ProductDescriptionGroups.cs" />
     <Compile Include="Inventory\ProductImages.cs" />
     <Compile Include="Inventory\ProductInterests.cs" />
     <Compile Include="Inventory\ProductReviews.cs" />
     <Compile Include="Inventory\Series.cs" />
     <Compile Include="Inventory\SpecialProducts.cs" />
     <Compile Include="Inventory\SpecItems.cs" />
+    <Compile Include="Inventory\SpecLevelDetails.cs" />
     <Compile Include="Inventory\SpecProductDetails.cs" />
     <Compile Include="Inventory\SupplierProducts.cs" />
     <Compile Include="Inventory\SupplierWarrenty.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Inventory\SpecDetail.cs" />
     <Compile Include="Inventory\SpecMaster.cs" />
+    <Compile Include="Inventory\SpecGroups.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

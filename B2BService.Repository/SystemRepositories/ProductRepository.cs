@@ -298,11 +298,11 @@ namespace B2BService.Repository.SystemRepositories
             }
         }
 
-        public async Task<ProductVMNew> GetSingleProduct(int Id)
+        public async Task<ProductVMSingle> GetSingleProduct(int Id)
         {
             try
             {
-                ProductVMNew outpro = new ProductVMNew();
+                ProductVMSingle outpro = new ProductVMSingle();
                 using (IDbConnection db = Conn)
                 {
                     DynamicParameters parameter = new DynamicParameters();
@@ -310,12 +310,12 @@ namespace B2BService.Repository.SystemRepositories
                     parameter.Add("@id", Id , dbType: DbType.Int32, direction: ParameterDirection.Input);
 
 
-                    var orderDictionary = new Dictionary<int, ProductVMNew>();
-                    var list = db.Query<ProductVMNew, features, ProductVMNew>(
+                    var orderDictionary = new Dictionary<int, ProductVMSingle>();
+                    var list = db.Query<ProductVMSingle, features, ProductVMSingle>(
                         GlobalSPNames.NewArrivalProductSingleSPName,
                         (Pro, Fe) =>
                         {
-                            ProductVMNew orderEntry;
+                            ProductVMSingle orderEntry;
 
                             if (!orderDictionary.TryGetValue(Pro.id, out orderEntry))
                             {
@@ -332,7 +332,7 @@ namespace B2BService.Repository.SystemRepositories
                     .ToList();
 
                     list.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
-                    list.ForEach(x => x.images = new List<string>());
+                    list.ForEach(x => x.images = new List<string>() { "http://localhost/images/ProductImg_Init/" + x.id + ".jpg", "http://localhost/images/ProductImg_Init/" + x.id + ".jpg" });
 
                     return list.First();
                 }
@@ -343,6 +343,99 @@ namespace B2BService.Repository.SystemRepositories
             }
         }
 
+        public async Task<List<ProductSpecificationsGroups>> GetSpecificationForGivenProduct(int Id)
+        {
+            try
+            {
+                ProductSpecificationsGroups outpro = new ProductSpecificationsGroups();
+                using (IDbConnection db = Conn)
+                {
+                    DynamicParameters parameter = new DynamicParameters();
+                    parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                    parameter.Add("@ProId", Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+
+
+                    var orderDictionary = new Dictionary<int, ProductSpecificationsGroups>();
+                    var list = db.Query<ProductSpecificationsGroups, ProductSpecifications, ProductSpecificationsGroups>(
+                        GlobalSPNames.SpecificationForGivenProductSPName,
+                        (Pro, Fe) =>
+                        {
+                            ProductSpecificationsGroups orderEntry;
+
+                            if (!orderDictionary.TryGetValue(Pro.GroupID, out orderEntry))
+                            {
+                                orderEntry = Pro;
+                                orderEntry.Details = new List<ProductSpecifications>();
+                                orderDictionary.Add(orderEntry.GroupID, orderEntry);
+                            }
+
+                            orderEntry.Details.Add(Fe);
+                            return orderEntry;
+                        },
+                        splitOn: "ProductId", param: parameter, commandType: CommandType.StoredProcedure)
+                    .Distinct()
+                    .ToList();
+
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpecLevelMasterVM>> GetSpecGrouping(int Id , bool isproduct)
+        {
+            try
+            {
+                string SpName = "";
+                SpecLevelMasterVM outpro = new SpecLevelMasterVM();
+                using (IDbConnection db = Conn)
+                {
+                    DynamicParameters parameter = new DynamicParameters();
+                    parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                    if (isproduct)
+                    {
+                        parameter.Add("@ProId", Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+                        SpName = GlobalSPNames.SpecLevelDetailSPName;
+                    }
+                    else {
+                        parameter.Add("@Level3Id", Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+                        SpName = GlobalSPNames.SpecLevelDetailByLevelSPName;
+                    }
+
+                    
+
+                    var orderDictionary = new Dictionary<int, SpecLevelMasterVM>();
+                    var list = db.Query<SpecLevelMasterVM, SpecLevelDetailsVM, SpecLevelMasterVM>(
+                        SpName,
+                        (Pro, Fe) =>
+                        {
+                            SpecLevelMasterVM orderEntry;
+
+                            if (!orderDictionary.TryGetValue(Pro.SpecId, out orderEntry))
+                            {
+                                orderEntry = Pro;
+                                orderEntry.Details = new List<SpecLevelDetailsVM>();
+                                orderDictionary.Add(orderEntry.SpecId, orderEntry);
+                            }
+
+                            orderEntry.Details.Add(Fe);
+                            return orderEntry;
+                        },
+                        splitOn: "SpecValue", param: parameter, commandType: CommandType.StoredProcedure)
+                    .Distinct()
+                    .ToList();
+
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
 
     }

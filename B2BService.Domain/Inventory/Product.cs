@@ -45,5 +45,9 @@ namespace B2BService.Domain.Inventory
         /// Use this field to filter out the individual sellers product list on the portal
         /// </summary>
         public string AddedSellerID { get; set; }
+
+        public string Description { get; set; }
+        
+
     }
 }

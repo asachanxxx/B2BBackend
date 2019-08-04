@@ -70,6 +70,7 @@
     <Compile Include="Product\ProductsForCatelogVM.cs" />
     <Compile Include="Product\ProductVM.cs" />
     <Compile Include="Product\SearchVM.cs" />
+    <Compile Include="Product\SpecLevelMasterVM.cs" />
     <Compile Include="Product\SubCatVM.cs" />
     <Compile Include="Product\SupplierBundleVM.cs" />
     <Compile Include="UserOrganisazionVM.cs" />

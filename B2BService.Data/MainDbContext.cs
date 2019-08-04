@@ -33,8 +33,9 @@ namespace B2BService.Data
         public DbSet<SpecDetail> SpecDetail { get; set; }
         public DbSet<SpecItem> SpecItem { get; set; }
         public DbSet<SpecProductDetails> SpecProductDetails { get; set; }
+        public DbSet<SpecGroups> SpecGroups { get; set; }
 
-        
+
         public DbSet<SupplierProducts> SupplierProduct { get; set; }
 
         public DbSet<Level1> Level1 { get; set; }
@@ -49,6 +50,7 @@ namespace B2BService.Data
         public DbSet<BestSellProduct> BestSellProduct { get; set; }
         public DbSet<NewArrivalProduct> NewArrivalProduct { get; set; }
         public DbSet<FeatureProducts> FeatureProducts { get; set; }
+        public DbSet<SpecLevelDetails> SpecLevelDetails { get; set; }
 
 
     }

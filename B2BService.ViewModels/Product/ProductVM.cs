@@ -39,7 +39,8 @@ namespace B2BService.ViewModels.Product
         public string AddedSellerID { get; set; }
     }
 
-    public class SpecItemsVM {
+    public class SpecItemsVM
+    {
         public int SpecItemId { get; set; }
         public string SpecItemName { get; set; }
         public string SpecItemDisplayName { get; set; }
@@ -63,7 +64,8 @@ namespace B2BService.ViewModels.Product
     }
 
 
-    public class features {
+    public class features
+    {
         public int Id { get; set; }
         public string fname { get; set; }
         public string fvalue { get; set; }
@@ -72,8 +74,60 @@ namespace B2BService.ViewModels.Product
     public class StringPar
     {
         public string fname { get; set; }
-        
+
     }
 
+    public class ProductVMSingle
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public string Brand { get; set; }
+        public string PartNo { get; set; }
+        public string Model { get; set; }
+        public string Description { get; set; }
+        public decimal price { get; set; }
+        public decimal compareAtPrice { get; set; }
+        public int rating { get; set; }
+        public int reviews { get; set; }
+        public string availability { get; set; } = "in-stock";
+        public List<features> features { get; set; }
+        public List<string> images { get; set; }
+        public List<string> badges { get; set; }
+    }
+
+
+    /*
+     ProductId	SpecItemId	SpecItemName	SpecItemDisplayName	Value	GroupID	GroupName
+15	38	Effective Memory Clock	Effective Memory Clock	14000 MHz	11	Memory
+     
+     */
+
+    public class ProductSpecificationsGroups
+    {
+        public int GroupID { get; set; }
+        public string GroupName { get; set; }
+        public List<ProductSpecifications> Details { get; set; }
+    }
+
+    public class ProductSpecificationsXXXX
+    {
+        public int ProductId { get; set; }
+        public int GroupID { get; set; }
+        public int SpecItemId { get; set; }
+        public string SpecItemName { get; set; }
+        public string SpecItemDisplayName { get; set; }
+        public string Value { get; set; }
+    }
+
+    public class ProductSpecifications
+    {
+        public string SpecItemName { get; set; }
+        public string SpecItemDisplayName { get; set; }
+        public string Value { get; set; }
+    }
+
+
+
+    //GroupID GroupName   SpecItemName SpecItemDisplayName Value
 
 }

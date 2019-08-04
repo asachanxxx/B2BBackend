@@ -217,5 +217,57 @@ namespace B2BService.Service.Controllers.SystemControllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
+
+        [Route("GetSpecificationForGivenProduct")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetSpecificationForGivenProduct(int ProductId)
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetSpecificationForGivenProduct(ProductId));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [Route("GetSpecGrouping")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetSpecGrouping(int ProductId)
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetSpecGrouping(ProductId,true));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [Route("GetSpecGroupingLevel3")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetSpecGroupingLevel3(int ProductId)
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetSpecGrouping(ProductId, false));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
     }
 }

@@ -14,5 +14,6 @@ namespace B2BService.Domain
         public string DataType { get; set; }
         public string DefaultValue { get; set; }
         public bool IsApproved { get; set; }
+        public int SpecGroupId { get; set; }
     }
 }
