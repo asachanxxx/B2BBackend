@@ -26,6 +26,7 @@ namespace B2BService.Domain.Coparate
         public bool Approved { get; set; }
         public int OrganizationID { get; set; }
         public int GroupId { get; set; }
+        public bool IsSupperUser { get; set; }
 
     }
 }

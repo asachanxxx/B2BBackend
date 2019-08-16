@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace B2BService.Domain.Inventory
 {
-    public class ProductReviews:BaseClass
+    public class Reviews:BaseClass
     {
         public int Id { get; set; }
         public int ItemId { get; set; }

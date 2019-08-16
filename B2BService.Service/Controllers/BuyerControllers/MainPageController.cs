@@ -95,5 +95,22 @@ namespace B2BService.Service.Controllers.BuyerControllers
             }
         }
 
+        [Route("GetNavigationLink")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetNavigationLink()
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetNavigationLink());
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
     }
 }

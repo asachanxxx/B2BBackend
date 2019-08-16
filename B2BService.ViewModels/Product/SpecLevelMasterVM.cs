@@ -16,5 +16,12 @@ namespace B2BService.ViewModels.Product
     public class SpecLevelDetailsVM
     {
         public string SpecValue { get; set; }
+        public string type { get; set; } = "checkbox";
+        public int count { get; set; }
+        public bool checked_def { get; set; } = false;
+        public bool disabled { get; set; } = false;
+
     }
+
+
 }

@@ -16,5 +16,8 @@ namespace B2BService.Domain
         public int NoOfClicks { get; set; }
         public int NoOfImpressions { get; set; }
         public int SpecMasterId { get; set; }
+        public string Url { get; set; }
+        public string External { get; set; }
+        public string Target { get; set; }
     }
 }

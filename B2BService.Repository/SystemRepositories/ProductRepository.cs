@@ -243,7 +243,7 @@ namespace B2BService.Repository.SystemRepositories
                     .ToList();
 
                     list.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
-                    list.ForEach(x => x.images = new List<string>() { "http://localhost/images/ProductImg_Init/"+x.id +".jpg", "http://localhost/images/ProductImg_Init/" + x.id + ".jpg" });
+                    list.ForEach(x => x.images = new List<string>() { "http://localhost/images/ProductImg_Init/" + x.id + ".jpg", "http://localhost/images/ProductImg_Init/" + x.id + ".jpg" });
 
                     return list;
                 }
@@ -307,7 +307,7 @@ namespace B2BService.Repository.SystemRepositories
                 {
                     DynamicParameters parameter = new DynamicParameters();
                     parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                    parameter.Add("@id", Id , dbType: DbType.Int32, direction: ParameterDirection.Input);
+                    parameter.Add("@id", Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
 
 
                     var orderDictionary = new Dictionary<int, ProductVMSingle>();
@@ -372,7 +372,7 @@ namespace B2BService.Repository.SystemRepositories
                             orderEntry.Details.Add(Fe);
                             return orderEntry;
                         },
-                        splitOn: "ProductId", param: parameter, commandType: CommandType.StoredProcedure)
+                        splitOn: "SpecItemName", param: parameter, commandType: CommandType.StoredProcedure)
                     .Distinct()
                     .ToList();
 
@@ -385,7 +385,7 @@ namespace B2BService.Repository.SystemRepositories
             }
         }
 
-        public async Task<List<SpecLevelMasterVM>> GetSpecGrouping(int Id , bool isproduct)
+        public async Task<List<SpecLevelMasterVM>> GetSpecGrouping(int Id, bool isproduct)
         {
             try
             {
@@ -400,12 +400,13 @@ namespace B2BService.Repository.SystemRepositories
                         parameter.Add("@ProId", Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
                         SpName = GlobalSPNames.SpecLevelDetailSPName;
                     }
-                    else {
+                    else
+                    {
                         parameter.Add("@Level3Id", Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
                         SpName = GlobalSPNames.SpecLevelDetailByLevelSPName;
                     }
 
-                    
+
 
                     var orderDictionary = new Dictionary<int, SpecLevelMasterVM>();
                     var list = db.Query<SpecLevelMasterVM, SpecLevelDetailsVM, SpecLevelMasterVM>(
@@ -437,6 +438,57 @@ namespace B2BService.Repository.SystemRepositories
             }
         }
 
+        public async Task<List<Level1VMMega>> GetNavigationLink()
+        {
+            List<Level1VMMega> returnobj = new List<Level1VMMega>();
+
+            string GetAllForSiteWithoutCountriesSQL = @"SELECT  id AS 'Level1Id' ,level1name AS 'Level1Name' FROM Level1 ORDER BY ID;";
+            using (IDbConnection db = Conn)
+            {
+                using (var multi = db.QueryMultiple(GetAllForSiteWithoutCountriesSQL))
+                {
+                    returnobj = multi.Read<Level1VMMega>().ToList();
+
+                    foreach (var item in returnobj)
+                    {
+                        //string GetAllForSiteWithCountriesSQL = @"SELECT L2.LEVEL1ID AS 'Level1Id',L2.ID AS 'Level2Id',L2.LEVEL2NAME AS 'Level2Name',L3.ID AS 'Level3Id',L3.LEVEL3NAME AS 'Level3Name' FROM Level2 AS L2
+                        //                                         INNER JOIN Level3 AS L3 ON L2.ID = L3.LEVEL12D WHERE L2.LEVEL1ID= "+ item.Level1Id;
+
+                        string GetAllForSiteWithCountriesSQL = @"SELECT L2.LEVEL1ID AS 'Level1Id',L2.ID AS 'Level2Id',L2.LEVEL2NAME AS 'Level2Name',L2.Url,L2.[External1],L2.Target, L2.ColumnNumber  , L3.ID AS 'Level3Id',L3.LEVEL3NAME AS 'Level3Name',L3.Url,L3.[External2],L3.Target FROM Level2 AS L2" +
+                                                                 "INNER JOIN Level3 AS L3 ON L2.ID = L3.LEVEL12D WHERE L2.LEVEL1ID= " + item.Level1Id;
+
+
+                        var orderDictionary = new Dictionary<int, Level2VMMega>();
+                        var list = db.Query<Level2VMMega, Level3VMMega, Level2VMMega>(
+                            GetAllForSiteWithCountriesSQL,
+                            (Pro, Fe) =>
+                            {
+                                Level2VMMega orderEntry;
+
+                                if (!orderDictionary.TryGetValue(Pro.Level2Id, out orderEntry))
+                                {
+                                    orderEntry = Pro;
+                                    orderEntry.Details = new List<Level3VMMega>();
+                                    orderDictionary.Add(orderEntry.Level2Id, orderEntry);
+                                }
+
+                                orderEntry.Details.Add(Fe);
+                                return orderEntry;
+                            },
+                            splitOn: "Level3Id")
+                        .Distinct()
+                        .ToList();
+                        //item.Details= list;
+                    }
+                }
+            }
+
+            return returnobj;
+        }
+
 
     }
+
+
 }
+

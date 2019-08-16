@@ -25,7 +25,7 @@ namespace B2BService.Data
         public DbSet<CateglogProducts> CateglogProducts { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductImages> ProductImage { get; set; }
-        public DbSet<ProductReviews> ProductReview { get; set; }
+        public DbSet<Reviews> Reviews { get; set; }
         public DbSet<WarrentyType> WarrentyType { get; set; }
         public DbSet<SupplierWarrenty> SupplierWarrenty { get; set; }
         public DbSet<SpecialProducts> SpecialProduct { get; set; }
@@ -51,7 +51,11 @@ namespace B2BService.Data
         public DbSet<NewArrivalProduct> NewArrivalProduct { get; set; }
         public DbSet<FeatureProducts> FeatureProducts { get; set; }
         public DbSet<SpecLevelDetails> SpecLevelDetails { get; set; }
+        public DbSet<ProductRating> ProductRating { get; set; }
+        public DbSet<ProductReview> ProductReview { get; set; }
 
+        public DbSet<UserGroup> UserGroup { get; set; }
+        public DbSet<Approval> Approval { get; set; }
 
     }
 }

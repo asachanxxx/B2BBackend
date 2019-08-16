@@ -243,7 +243,7 @@ namespace B2BService.Service.Controllers.SystemControllers
             {
                 string username = RequestContext.Principal.Identity.Name;
                 string clientAddress = HttpContext.Current.Request.UserHostAddress;
-                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetSpecGrouping(ProductId,true));
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetSpecGrouping(ProductId, true)); 
             }
             catch (Exception ex)
             {
@@ -254,13 +254,13 @@ namespace B2BService.Service.Controllers.SystemControllers
 
         [Route("GetSpecGroupingLevel3")]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetSpecGroupingLevel3(int ProductId)
+        public async Task<HttpResponseMessage> GetSpecGroupingLevel3(int Level3Id)
         {
             try
             {
                 string username = RequestContext.Principal.Identity.Name;
                 string clientAddress = HttpContext.Current.Request.UserHostAddress;
-                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetSpecGrouping(ProductId, false));
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetSpecGrouping(Level3Id, false));
             }
             catch (Exception ex)
             {
@@ -268,6 +268,27 @@ namespace B2BService.Service.Controllers.SystemControllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
+
+        [Route("SaveProductReview")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> SaveProductReview(ProductReview modelVM)
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                RepoBase<ProductReview> repo = new RepoBase<ProductReview>("ProductReviews");
+                return Request.CreateResponse(HttpStatusCode.OK, await repo.Save(modelVM,1));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+       
+
 
     }
 }
