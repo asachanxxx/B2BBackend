@@ -15,7 +15,6 @@ using System.Web.Http;
 namespace B2BService.Service.Controllers.BuyerControllers
 {
     [RoutePrefix("MainPage")]
-    [Authorize]
     public class MainPageController : ApiController
     {
 

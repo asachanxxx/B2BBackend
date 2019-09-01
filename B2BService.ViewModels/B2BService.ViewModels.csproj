@@ -60,6 +60,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainPage\MenuUI.cs" />
+    <Compile Include="Organisazion\CountryVM.cs" />
+    <Compile Include="Organisazion\EmailVM.cs" />
+    <Compile Include="Organisazion\OrgUserVM.cs" />
     <Compile Include="Organisazion\UserInObject.cs" />
     <Compile Include="Product\CatelogDataFeedVM.cs" />
     <Compile Include="Product\CatelogItemsVM.cs" />

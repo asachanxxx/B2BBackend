@@ -80,6 +80,49 @@ namespace B2BService.Repository
             }
         }
 
+        public async Task<IEnumerable<T>> ExcuteStoredProcedureToSave<T>(string SPName, string obj) where T : class
+        {
+            try
+            {
+                using (IDbConnection db = Conn)
+                {
+                    DynamicParameters parameter = new DynamicParameters();
+                    parameter.Add("@Obj", obj, DbType.String, ParameterDirection.Input);
+                    parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                    return await db.QueryAsync<T>(SPName, parameter, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+        /// <summary>
+        /// To excite a given sp and return single instance of the object of type T. without passing any parameters
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="SPName">Stored Procedure to exute</param>
+        /// <returns></returns>
+        public async Task<IEnumerable<T>> QueryStoredProcedureSQLString<T>(string SQL) where T : class
+        {
+            try
+            {
+                using (IDbConnection db = Conn)
+                {
+                    return await db.QueryAsync<T>(SQL);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
 
         /// <summary>
         /// To excite a given sp and return single instance of the object of type T. without passing any parameters
@@ -129,6 +172,11 @@ namespace B2BService.Repository
             }
         }
 
+        internal Task<int> ExcuteStoredProcedureToSave<T>(object approveUserSPName, T obj)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// This method is complicated. what it does is that it take one type of parameter as passing parameters and different types as Return type
         /// THis will enable users to genaralize the passing and retrning types 
@@ -147,7 +195,7 @@ namespace B2BService.Repository
                 {
                     DynamicParameters parameter = new DynamicParameters();
                     parameter.Add("@XMLSQL", xmlperson, DbType.String, ParameterDirection.Input);
-                    parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+                    parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
                     return await db.QueryAsync<TOut>(SPName, parameter, commandType: CommandType.StoredProcedure);
 
                 }
@@ -178,5 +226,38 @@ namespace B2BService.Repository
                 throw ex;
             }
         }
+
+        private async Task<List<T>> ReadTextAsync<T>(string filePath) where T : class
+        {
+            try
+            {
+                JsonEngine jengine = new JsonEngine();
+
+                using (FileStream sourceStream = new FileStream(filePath,
+                    FileMode.Open, FileAccess.Read, FileShare.Read,
+                    bufferSize: 4096, useAsync: true))
+                {
+                    StringBuilder sb = new StringBuilder();
+
+                    byte[] buffer = new byte[0x1000];
+                    int numRead;
+                    while ((numRead = await sourceStream.ReadAsync(buffer, 0, buffer.Length)) != 0)
+                    {
+                        string text = Encoding.ASCII.GetString(buffer, 0, numRead);
+                        sb.Append(text);
+                    }
+
+                    var listback = jengine.ConvertFromJson<T>(sb.ToString());
+
+                    return listback;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
     }
 }

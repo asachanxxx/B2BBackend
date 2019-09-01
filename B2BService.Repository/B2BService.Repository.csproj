@@ -59,9 +59,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuyerRepositories\CorparateRepository.cs" />
     <Compile Include="IRepoBase.cs" />
     <Compile Include="IStandAloneRepository.cs" />
     <Compile Include="LogRepositories\LogRepository.cs" />
+    <Compile Include="MessagingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepoBase.cs" />
     <Compile Include="SellerRepositories\CoparateReporitory.cs" />
@@ -98,7 +100,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BuyerRepositories\" />
     <Folder Include="ManagerRepositories\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

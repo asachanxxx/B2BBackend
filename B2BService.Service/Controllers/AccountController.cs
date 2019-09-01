@@ -18,6 +18,8 @@ using B2BService.Service.Providers;
 using B2BService.Service.Results;
 using B2BService.Service.Owin;
 using B2BService.ViewModels;
+using B2BService.ViewModels.Organisazion;
+using B2BService.Domain.Coparate;
 
 namespace B2BService.Service.Controllers
 {
@@ -366,15 +368,15 @@ namespace B2BService.Service.Controllers
         }
 
         [AllowAnonymous]
-        [Route("RegisterBuyer")]
-        public async Task<IHttpActionResult> RegisterBuyer(UserOrganisazionVM userModel)
+        [Route("CreateBuyerWithOrganisation")]
+        public async Task<IHttpActionResult> CreateBuyerWithOrganisation(OrgUserFullVM userModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await _repo.RegisterBuyer(userModel);
+            IdentityResult result = await _repo.CreateBuyerWithOrganisation(userModel);
 
             IHttpActionResult errorResult = GetErrorResult(result);
 
@@ -386,6 +388,47 @@ namespace B2BService.Service.Controllers
             return Ok();
         }
 
+        [AllowAnonymous]
+        [Route("CreateUserOnly")]
+        public async Task<IHttpActionResult> CreateUserOnly(User userModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult result = await _repo.CreateUserOnly(userModel);
+
+            IHttpActionResult errorResult = GetErrorResult(result);
+
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
+
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        [Route("CreateUserOnlyForAdmins")]
+        public async Task<IHttpActionResult> CreateUserOnlyForAdmins(User userModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult result = await _repo.CreateUserOnlyForAdmins(userModel);
+
+            IHttpActionResult errorResult = GetErrorResult(result);
+
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
+
+            return Ok();
+        }
 
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]

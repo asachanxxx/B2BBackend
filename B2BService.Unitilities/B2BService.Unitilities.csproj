@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,8 +44,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSPNames.cs" />
+    <Compile Include="JsonEngine.cs" />
     <Compile Include="XMLTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="emailtemplate.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\B2BService.Domain\B2BService.Domain.csproj">
+      <Project>{30e1f817-4d05-4532-8cf4-8780d5391aef}</Project>
+      <Name>B2BService.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

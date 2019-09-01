@@ -62,6 +62,11 @@
     <Compile Include="Comunication\SystemMessages.cs" />
     <Compile Include="Comunication\SystemTasks.cs" />
     <Compile Include="Coparate\Approvals.cs" />
+    <Compile Include="Coparate\BussinessTypesJson.cs" />
+    <Compile Include="Coparate\CityJson.cs" />
+    <Compile Include="Coparate\DistrictJson.cs" />
+    <Compile Include="Coparate\EmailConfirmations.cs" />
+    <Compile Include="Coparate\EmailSettings.cs" />
     <Compile Include="Coparate\Organization.cs" />
     <Compile Include="Coparate\ProductRating.cs" />
     <Compile Include="Coparate\User.cs" />

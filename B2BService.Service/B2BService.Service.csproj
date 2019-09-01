@@ -265,7 +265,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SellerControllers\BrandAndModelsController.cs" />
     <Compile Include="Controllers\SellerControllers\CategoryController.cs" />
-    <Compile Include="Controllers\SellerControllers\CorparateController.cs" />
+    <Compile Include="Controllers\SiteTestController.cs" />
+    <Compile Include="Controllers\SystemControllers\CorparateController.cs" />
     <Compile Include="Controllers\SellerControllers\ProductController.cs" />
     <Compile Include="Controllers\SystemControllers\ItemsController.cs" />
     <Compile Include="Controllers\SystemControllers\SpecController.cs" />

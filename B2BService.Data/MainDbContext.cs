@@ -57,5 +57,13 @@ namespace B2BService.Data
         public DbSet<UserGroup> UserGroup { get; set; }
         public DbSet<Approval> Approval { get; set; }
 
+        public DbSet<DistrictJson> District { get; set; }
+        public DbSet<CityJson> City { get; set; }
+        public DbSet<BussinessTypesJson> BussinessType { get; set; }
+
+        public DbSet<EmailConfirmations> EmailConfirmations { get; set; }
+        public DbSet<EmailSettings> EmailSettings { get; set; }
+
+
     }
 }

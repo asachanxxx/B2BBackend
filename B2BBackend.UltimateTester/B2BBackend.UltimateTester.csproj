@@ -84,6 +84,7 @@
     <EmbeddedResource Include="P_search.resx">
       <DependentUpon>P_search.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="myobjects.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -9,6 +9,19 @@ namespace B2BService.Unitilities
     public class GlobalSPNames
     {
         public static string AddOrganizationSPName { get; set; } = "SP_PRO_AddOrganization";
+        public static string AddOUserOnlySPName { get; set; } = "SP_PRO_AddOUserOnlySPName";
+        public static string ApproveUserSPName { get; set; } = "SP_PRO_ApproveUserSPName";
+        public static string GetAllusersForApprovalSPName { get; set; } = "SP_PRO_GetAllusersForApprovalSPName";
+        public static string GetUserDetailsSPName { get; set; } = "SP_PRO_GetUserDetailsSPName";
+        public static string EditUserDetailsSPName { get; set; } = "SP_PRO_EditUserDetailsSPNameSPName";
+        public static string EditOrgDetailsSPName { get; set; } = "SP_PRO_EditOrgDetailsSPName";
+        public static string ChangeSupperUserSPName { get; set; } = "SP_PRO_ChangeSupperUserSPName";
+        public static string ApproveQutationsSPName { get; set; } = "SP_PRO_ApproveQutationsSPName";
+        public static string CreateOrganizationOnlySPName { get; set; } = "SP_PRO_CreateOrganizationOnlySPName";
+
+        
+
+
         public static string AddCatelogProductSPName { get; set; } = "SP_PRO_AddCatelogProduct";
         public static string AddProductSPName { get; set; } = "SP_PRO_AddProduct";
         public static string AddLevel1SPName { get; set; } = "SP_PRO_AddLevel1";
@@ -42,6 +55,10 @@ namespace B2BService.Unitilities
 
         
         public static string BestSellProductSPName { get; set; } = "SP_Get_BestSellProduct";
+        public static string EmailConfirmationsSPName { get; set; } = "SP_SaveConfirmationMail";
+
+
+        
 
     }
 }

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace B2BService.Repository.SystemRepositories
     {
         public readonly StandAloneRepository StdRepo;
         public readonly IDbConnection Conn;
+        private string ImagePath = System.Configuration.ConfigurationManager.AppSettings["InitImagePath"].Trim();
         public ProductRepository()
         {
             StdRepo = new StandAloneRepository();
@@ -178,7 +180,7 @@ namespace B2BService.Repository.SystemRepositories
 
 
                     var orderDictionary = new Dictionary<int, ProductVMNew>();
-                    var list = db.Query<ProductVMNew, features, ProductVMNew>(
+                    var list = await db.QueryAsync<ProductVMNew, features, ProductVMNew>(
                         GlobalSPNames.BestSellProductSPName,
                         (Pro, Fe) =>
                         {
@@ -194,14 +196,16 @@ namespace B2BService.Repository.SystemRepositories
                             orderEntry.features.Add(Fe);
                             return orderEntry;
                         },
-                        splitOn: "id", param: parameter, commandType: CommandType.StoredProcedure)
-                    .Distinct()
-                    .ToList();
+                        splitOn: "id", param: parameter, commandType: CommandType.StoredProcedure);
+                    var secluist = list.Distinct().ToList();
 
-                    list.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
-                    list.ForEach(x => x.images = new List<string>() { "http://localhost/images/ProductImg_Init/" + x.id + ".jpg", "http://localhost/images/ProductImg_Init/" + x.id + ".jpg" });
+                    //.Distinct()
+                    //.ToList();
 
-                    return list;
+                    secluist.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
+                    secluist.ForEach(x => x.images = new List<string>() { Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg", Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg" });
+
+                    return secluist;
                 }
             }
             catch (Exception ex)
@@ -222,7 +226,7 @@ namespace B2BService.Repository.SystemRepositories
 
 
                     var orderDictionary = new Dictionary<int, ProductVMNew>();
-                    var list = db.Query<ProductVMNew, features, ProductVMNew>(
+                    var list = await db.QueryAsync<ProductVMNew, features, ProductVMNew>(
                         GlobalSPNames.FeatureProductsSPName,
                         (Pro, Fe) =>
                         {
@@ -238,14 +242,17 @@ namespace B2BService.Repository.SystemRepositories
                             orderEntry.features.Add(Fe);
                             return orderEntry;
                         },
-                        splitOn: "id", param: parameter, commandType: CommandType.StoredProcedure)
-                    .Distinct()
-                    .ToList();
+                        splitOn: "id", param: parameter, commandType: CommandType.StoredProcedure);
 
-                    list.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
-                    list.ForEach(x => x.images = new List<string>() { "http://localhost/images/ProductImg_Init/" + x.id + ".jpg", "http://localhost/images/ProductImg_Init/" + x.id + ".jpg" });
+                    var secluist = list.Distinct().ToList();
 
-                    return list;
+                    //.Distinct()
+                    //.ToList();
+
+                    secluist.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
+                    secluist.ForEach(x => x.images = new List<string>() { Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg", Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg" });
+
+                    return secluist;
                 }
             }
             catch (Exception ex)
@@ -253,6 +260,7 @@ namespace B2BService.Repository.SystemRepositories
                 throw ex;
             }
         }
+
 
         public async Task<List<ProductVMNew>> GetNewArrivalProduct()
         {
@@ -266,7 +274,7 @@ namespace B2BService.Repository.SystemRepositories
 
 
                     var orderDictionary = new Dictionary<int, ProductVMNew>();
-                    var list = db.Query<ProductVMNew, features, ProductVMNew>(
+                    var list = await db.QueryAsync<ProductVMNew, features, ProductVMNew>(
                         GlobalSPNames.NewArrivalProductSPName,
                         (Pro, Fe) =>
                         {
@@ -282,14 +290,14 @@ namespace B2BService.Repository.SystemRepositories
                             orderEntry.features.Add(Fe);
                             return orderEntry;
                         },
-                        splitOn: "id", param: parameter, commandType: CommandType.StoredProcedure)
-                    .Distinct()
-                    .ToList();
+                        splitOn: "id", param: parameter, commandType: CommandType.StoredProcedure);
 
-                    list.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
-                    list.ForEach(x => x.images = new List<string>() { "http://localhost/images/ProductImg_Init/" + x.id + ".jpg", "http://localhost/images/ProductImg_Init/" + x.id + ".jpg" });
+                    var secluist = list.Distinct().ToList();
 
-                    return list;
+                    secluist.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
+                    secluist.ForEach(x => x.images = new List<string>() { Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg", Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg" });
+
+                    return secluist;
                 }
             }
             catch (Exception ex)
@@ -311,7 +319,7 @@ namespace B2BService.Repository.SystemRepositories
 
 
                     var orderDictionary = new Dictionary<int, ProductVMSingle>();
-                    var list = db.Query<ProductVMSingle, features, ProductVMSingle>(
+                    var list = await db.QueryAsync<ProductVMSingle, features, ProductVMSingle>(
                         GlobalSPNames.NewArrivalProductSingleSPName,
                         (Pro, Fe) =>
                         {
@@ -327,14 +335,15 @@ namespace B2BService.Repository.SystemRepositories
                             orderEntry.features.Add(Fe);
                             return orderEntry;
                         },
-                        splitOn: "id", param: parameter, commandType: CommandType.StoredProcedure)
-                    .Distinct()
-                    .ToList();
+                        splitOn: "id", param: parameter, commandType: CommandType.StoredProcedure);
 
-                    list.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
-                    list.ForEach(x => x.images = new List<string>() { "http://localhost/images/ProductImg_Init/" + x.id + ".jpg", "http://localhost/images/ProductImg_Init/" + x.id + ".jpg" });
 
-                    return list.First();
+                    var secluist = list.Distinct().ToList();
+
+                    secluist.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
+                    secluist.ForEach(x => x.images = new List<string>() { Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg", Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg" });
+
+                    return secluist.First();
                 }
             }
             catch (Exception ex)
@@ -356,7 +365,7 @@ namespace B2BService.Repository.SystemRepositories
 
 
                     var orderDictionary = new Dictionary<int, ProductSpecificationsGroups>();
-                    var list = db.Query<ProductSpecificationsGroups, ProductSpecifications, ProductSpecificationsGroups>(
+                    var list = await db.QueryAsync<ProductSpecificationsGroups, ProductSpecifications, ProductSpecificationsGroups>(
                         GlobalSPNames.SpecificationForGivenProductSPName,
                         (Pro, Fe) =>
                         {
@@ -372,11 +381,10 @@ namespace B2BService.Repository.SystemRepositories
                             orderEntry.Details.Add(Fe);
                             return orderEntry;
                         },
-                        splitOn: "SpecItemName", param: parameter, commandType: CommandType.StoredProcedure)
-                    .Distinct()
-                    .ToList();
+                        splitOn: "SpecItemName", param: parameter, commandType: CommandType.StoredProcedure);
+                  
 
-                    return list;
+                    return list.Distinct().ToList();
                 }
             }
             catch (Exception ex)
@@ -409,7 +417,7 @@ namespace B2BService.Repository.SystemRepositories
 
 
                     var orderDictionary = new Dictionary<int, SpecLevelMasterVM>();
-                    var list = db.Query<SpecLevelMasterVM, SpecLevelDetailsVM, SpecLevelMasterVM>(
+                    var list = await db.QueryAsync<SpecLevelMasterVM, SpecLevelDetailsVM, SpecLevelMasterVM>(
                         SpName,
                         (Pro, Fe) =>
                         {
@@ -425,11 +433,9 @@ namespace B2BService.Repository.SystemRepositories
                             orderEntry.Details.Add(Fe);
                             return orderEntry;
                         },
-                        splitOn: "SpecValue", param: parameter, commandType: CommandType.StoredProcedure)
-                    .Distinct()
-                    .ToList();
+                        splitOn: "SpecValue", param: parameter, commandType: CommandType.StoredProcedure);
 
-                    return list;
+                    return list.Distinct().ToList();
                 }
             }
             catch (Exception ex)
