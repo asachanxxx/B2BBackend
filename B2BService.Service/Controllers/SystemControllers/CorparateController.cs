@@ -300,9 +300,10 @@ namespace B2BService.Service.Controllers.SystemControllers
         {
             try
             {
+                var path = System.Configuration.ConfigurationManager.AppSettings["ActivationPath"];
                 string username = RequestContext.Principal.Identity.Name;
                 string clientAddress = HttpContext.Current.Request.UserHostAddress;
-                var itemsz = await corepo.SendMail(obj);
+                var itemsz = await corepo.SendMail(obj, path);
                 return Request.CreateResponse(HttpStatusCode.OK, itemsz);
 
             }
@@ -313,6 +314,29 @@ namespace B2BService.Service.Controllers.SystemControllers
 
             }
         }
+
+        [Route("ActivateUserExternal")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> ActivateUserExternal(string UserId)
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                var itemsz = await corepo.ActivateUserExternal(UserId);
+                return Request.CreateResponse(HttpStatusCode.OK, itemsz);
+
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+
+            }
+        }
+
+
+
 
         /// <summary>
         /// 
@@ -330,7 +354,7 @@ namespace B2BService.Service.Controllers.SystemControllers
                 string username = RequestContext.Principal.Identity.Name;
                 string clientAddress = HttpContext.Current.Request.UserHostAddress;
 
-                return Request.CreateResponse(HttpStatusCode.OK, await corepo.CheckUserActiveStatus(UserId));
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.CheckUserValidity(UserId));
 
             }
             catch (Exception ex)

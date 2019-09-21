@@ -500,7 +500,28 @@ namespace B2BService.Service.Controllers
             }
         }
 
+        [Route("FindUserDataLogin")]
+        [HttpGet]
+        public async Task<IHttpActionResult> FindUserDataLogin(string username)
+        {
+            try
+            {
+                AuthRepository repo = new AuthRepository();
+                var user = await repo.FindUserDataLogin(username);
+                if (user == null)
+                {
+                    return InternalServerError(new Exception("Invalied Username"));
+                }
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
 
+
+        
 
 
 

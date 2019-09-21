@@ -220,6 +220,7 @@ namespace B2BService.Service.Controllers.SystemControllers
 
         [Route("GetSpecificationForGivenProduct")]
         [HttpGet]
+        [AllowAnonymous]
         public async Task<HttpResponseMessage> GetSpecificationForGivenProduct(int ProductId)
         {
             try
@@ -271,13 +272,13 @@ namespace B2BService.Service.Controllers.SystemControllers
 
         [Route("SaveProductReview")]
         [HttpPost]
-        public async Task<HttpResponseMessage> SaveProductReview(ProductReview modelVM)
+        public async Task<HttpResponseMessage> SaveProductReview(Review modelVM)
         {
             try
             {
                 string username = RequestContext.Principal.Identity.Name;
                 string clientAddress = HttpContext.Current.Request.UserHostAddress;
-                RepoBase<ProductReview> repo = new RepoBase<ProductReview>("ProductReviews");
+                RepoBase<Review> repo = new RepoBase<Review>("Review");
                 return Request.CreateResponse(HttpStatusCode.OK, await repo.Save(modelVM,1));
             }
             catch (Exception ex)
@@ -287,8 +288,61 @@ namespace B2BService.Service.Controllers.SystemControllers
             }
         }
 
-       
+        [Route("GetReviewsForgivenProduct")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetReviewsForgivenProduct(string ProductId)
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetReviewsForgivenProduct(ProductId));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
 
+        [Route("GetSupplierProducts")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetSupplierProducts(string ProductId)
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetSupplierProducts(ProductId));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+
+
+        [Route("GetSupplierWarranty")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetSupplierWarranty(int ProductId, int SupplierID)
+        {
+            try
+            {
+                string username = RequestContext.Principal.Identity.Name;
+                string clientAddress = HttpContext.Current.Request.UserHostAddress;
+                return Request.CreateResponse(HttpStatusCode.OK, await corepo.GetSupplierWarranty(ProductId, SupplierID));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(HttpContext.Current.Request, ex, RequestContext.Principal.Identity.Name);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+
+        
 
     }
 }

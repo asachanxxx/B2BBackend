@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuyerRepositories\CorparateRepository.cs" />
+    <Compile Include="BuyerRepositories\QuotationRepository.cs" />
     <Compile Include="IRepoBase.cs" />
     <Compile Include="IStandAloneRepository.cs" />
     <Compile Include="LogRepositories\LogRepository.cs" />

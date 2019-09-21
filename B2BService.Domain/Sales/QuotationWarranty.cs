@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace B2BService.Domain.Inventory
+namespace B2BService.Domain.Sales
 {
-    public class SupplierWarrenty:BaseClass
+    public class QuotationWarranty:BaseClass
     {
         public int Id { get; set; }
+        public int DocumentId { get; set; }
         public int WarrentyID { get; set; }
         public string Description { get; set; }
         public int SupplierID { get; set; }
@@ -18,8 +19,6 @@ namespace B2BService.Domain.Inventory
         /// </summary>
         public int Duration { get; set; }
         public decimal PriceForadditionalYear { get; set; }
-
-        
 
     }
 }

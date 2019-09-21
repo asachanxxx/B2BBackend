@@ -57,6 +57,26 @@ namespace B2BService.Unitilities
         public static string BestSellProductSPName { get; set; } = "SP_Get_BestSellProduct";
         public static string EmailConfirmationsSPName { get; set; } = "SP_SaveConfirmationMail";
 
+        //Sales
+
+        public static string SaveQuotationSPName { get; set; } = "SP_PRO_SaveQuotationSPName";
+        public static string UpdatePOStatusSPName { get; set; } = "SP_PRO_UpdatePOStatusSPName";
+        public static string DeletePOItemSPName { get; set; } = "SP_PRO_DeletePOItemSPName";
+        public static string ApprovePOByCustomerSPName { get; set; } = "SP_PRO_ApprovePOByCustomerSPName";
+        public static string GetQuotationMastersSPName { get; set; } = "SP_PRO_GetQuotationMastersSPName";
+        public static string GetQuotationDetailsSPName { get; set; } = "SP_PRO_GetQuotationDetailsSPName";
+        public static string GetQuotationWarrantySPName { get; set; } = "SP_PRO_GetQuotationWarrantySPName";
+
+
+
+        public static string GetSupplierApprovedQuotationsSPName { get; set; } = "SP_PRO_GetSupplierApprovedQuotationsSPName";
+        public static string ApproveQuotationBySupperUserSPName { get; set; } = "SP_PRO_ApproveQuotationBySupperUser";
+        public static string SavePoSPName { get; set; } = "SP_PRO_SavePoSPName";
+        public static string ApprovePOHeaderSPName { get; set; } = "SP_PRO_ApprovePOHeaderSPName";
+        public static string PoDetailIdSPName { get; set; } = "SP_PRO_ApprovePOHeaderSPName";
+        public static string ApprovePOHeaderByBuyerSPName { get; set; } = "SP_PRO_ApprovePOHeaderByBuyerSPName";
+        public static string WarrantyChangeRequestSPName { get; set; } = "SP_PRO_WarrantyChangeRequestSPNameSPName";
+
 
         
 

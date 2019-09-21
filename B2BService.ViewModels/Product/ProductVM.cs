@@ -57,8 +57,10 @@ namespace B2BService.ViewModels.Product
         public decimal compareAtPrice { get; set; }
         public int rating { get; set; }
         public int reviews { get; set; }
+        public int SupplierID { get; set; }
+        public string SupplierName { get; set; }
         public string availability { get; set; } = "in-stock";
-        public List<features> features { get; set; }
+        //public List<features> features { get; set; }
         public List<string> images { get; set; }
         public List<string> badges { get; set; }
     }
@@ -89,6 +91,8 @@ namespace B2BService.ViewModels.Product
         public decimal compareAtPrice { get; set; }
         public int rating { get; set; }
         public int reviews { get; set; }
+        public int SupplierID { get; set; }
+        public string SupplierName { get; set; }
         public string availability { get; set; } = "in-stock";
         public List<features> features { get; set; }
         public List<string> images { get; set; }
@@ -124,6 +128,33 @@ namespace B2BService.ViewModels.Product
         public string SpecItemName { get; set; }
         public string SpecItemDisplayName { get; set; }
         public string Value { get; set; }
+    }
+
+
+    public class SupplierProductVM
+    {
+        public int ItemId { get; set; }
+        public int SupplierID { get; set; }
+        
+        public string OrganizationName { get; set; }
+        public decimal Price { get; set; }
+    }
+
+
+    public class SupplierWarrantyVM
+    {
+        public int Id { get; set; }
+        public string Description { get; set; }
+        public int Duration { get; set; }
+        public int PriceForadditionalYear { get; set; }
+    }
+
+    public class ReviewVM
+    {
+        public string UserName { get; set; }
+        public string Caption { get; set; }
+        public int Rating { get; set; }
+        public DateTime Date { get; set; }
     }
 
 

@@ -168,7 +168,7 @@ namespace B2BService.Repository.SystemRepositories
         }
 
 
-        public async Task<List<ProductVMNew>> GetBestSellProducts()
+        public async Task<IEnumerable<ProductVMNew>> GetBestSellProducts()
         {
             try
             {
@@ -179,31 +179,9 @@ namespace B2BService.Repository.SystemRepositories
                     parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
 
-                    var orderDictionary = new Dictionary<int, ProductVMNew>();
-                    var list = await db.QueryAsync<ProductVMNew, features, ProductVMNew>(
-                        GlobalSPNames.BestSellProductSPName,
-                        (Pro, Fe) =>
-                        {
-                            ProductVMNew orderEntry;
-
-                            if (!orderDictionary.TryGetValue(Pro.id, out orderEntry))
-                            {
-                                orderEntry = Pro;
-                                orderEntry.features = new List<features>();
-                                orderDictionary.Add(orderEntry.id, orderEntry);
-                            }
-
-                            orderEntry.features.Add(Fe);
-                            return orderEntry;
-                        },
-                        splitOn: "id", param: parameter, commandType: CommandType.StoredProcedure);
-                    var secluist = list.Distinct().ToList();
-
-                    //.Distinct()
-                    //.ToList();
-
-                    secluist.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
-                    secluist.ForEach(x => x.images = new List<string>() { Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg", Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg" });
+                    var secluist = await db.QueryAsync<ProductVMNew>(GlobalSPNames.BestSellProductSPName, param: parameter, commandType: CommandType.StoredProcedure);
+                    secluist.ToList().ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
+                    secluist.ToList().ForEach(x => x.images = new List<string>() { Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg", Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg" });
 
                     return secluist;
                 }
@@ -214,7 +192,7 @@ namespace B2BService.Repository.SystemRepositories
             }
         }
 
-        public async Task<List<ProductVMNew>> GetFeatureProducts()
+        public async Task<IEnumerable<ProductVMNew>> GetFeatureProducts()
         {
             try
             {
@@ -224,33 +202,10 @@ namespace B2BService.Repository.SystemRepositories
                     DynamicParameters parameter = new DynamicParameters();
                     parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
+                    var secluist = await db.QueryAsync<ProductVMNew>(GlobalSPNames.FeatureProductsSPName, param: parameter, commandType: CommandType.StoredProcedure);
 
-                    var orderDictionary = new Dictionary<int, ProductVMNew>();
-                    var list = await db.QueryAsync<ProductVMNew, features, ProductVMNew>(
-                        GlobalSPNames.FeatureProductsSPName,
-                        (Pro, Fe) =>
-                        {
-                            ProductVMNew orderEntry;
-
-                            if (!orderDictionary.TryGetValue(Pro.id, out orderEntry))
-                            {
-                                orderEntry = Pro;
-                                orderEntry.features = new List<features>();
-                                orderDictionary.Add(orderEntry.id, orderEntry);
-                            }
-
-                            orderEntry.features.Add(Fe);
-                            return orderEntry;
-                        },
-                        splitOn: "id", param: parameter, commandType: CommandType.StoredProcedure);
-
-                    var secluist = list.Distinct().ToList();
-
-                    //.Distinct()
-                    //.ToList();
-
-                    secluist.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
-                    secluist.ForEach(x => x.images = new List<string>() { Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg", Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg" });
+                    secluist.ToList().ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
+                    secluist.ToList().ForEach(x => x.images = new List<string>() { Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg", Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg" });
 
                     return secluist;
                 }
@@ -262,7 +217,7 @@ namespace B2BService.Repository.SystemRepositories
         }
 
 
-        public async Task<List<ProductVMNew>> GetNewArrivalProduct()
+        public async Task<IEnumerable<ProductVMNew>> GetNewArrivalProduct()
         {
             try
             {
@@ -272,30 +227,10 @@ namespace B2BService.Repository.SystemRepositories
                     DynamicParameters parameter = new DynamicParameters();
                     parameter.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
+                    var secluist = await db.QueryAsync<ProductVMNew>(GlobalSPNames.NewArrivalProductSPName, param: parameter, commandType: CommandType.StoredProcedure);
 
-                    var orderDictionary = new Dictionary<int, ProductVMNew>();
-                    var list = await db.QueryAsync<ProductVMNew, features, ProductVMNew>(
-                        GlobalSPNames.NewArrivalProductSPName,
-                        (Pro, Fe) =>
-                        {
-                            ProductVMNew orderEntry;
-
-                            if (!orderDictionary.TryGetValue(Pro.id, out orderEntry))
-                            {
-                                orderEntry = Pro;
-                                orderEntry.features = new List<features>();
-                                orderDictionary.Add(orderEntry.id, orderEntry);
-                            }
-
-                            orderEntry.features.Add(Fe);
-                            return orderEntry;
-                        },
-                        splitOn: "id", param: parameter, commandType: CommandType.StoredProcedure);
-
-                    var secluist = list.Distinct().ToList();
-
-                    secluist.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
-                    secluist.ForEach(x => x.images = new List<string>() { Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg", Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg" });
+                    secluist.ToList().ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
+                    secluist.ToList().ForEach(x => x.images = new List<string>() { Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg", Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg" });
 
                     return secluist;
                 }
@@ -343,7 +278,7 @@ namespace B2BService.Repository.SystemRepositories
                     secluist.ForEach(x => x.badges = new List<string>() { "New", "Xprice" });
                     secluist.ForEach(x => x.images = new List<string>() { Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg", Path.Combine(ImagePath, "ProductImg_Init/") + x.id + ".jpg" });
 
-                    return secluist.First();
+                    return secluist.FirstOrDefault();
                 }
             }
             catch (Exception ex)
@@ -382,7 +317,7 @@ namespace B2BService.Repository.SystemRepositories
                             return orderEntry;
                         },
                         splitOn: "SpecItemName", param: parameter, commandType: CommandType.StoredProcedure);
-                  
+
 
                     return list.Distinct().ToList();
                 }
@@ -493,8 +428,63 @@ namespace B2BService.Repository.SystemRepositories
         }
 
 
-    }
 
+        public async Task<IEnumerable<ReviewVM>> GetReviewsForgivenProduct(string ProductId)
+        {
+            try
+            {
+                using (IDbConnection db = Conn)
+                {
+                    var returnval = await db.QueryAsync<ReviewVM>("select u.UserName,R.Caption,R.Rating ,R.Datetime as 'Date' from Reviews as R inner join Users as U on R.UserId = U.UserId where R.ItemId = '" + ProductId.Trim() + "'");
+                    return returnval;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("User is not active");
+            }
+        }
+
+
+        public async Task<IEnumerable<SupplierProductVM>> GetSupplierProducts(string ProductId)
+        {
+            try
+            {
+                using (IDbConnection db = Conn)
+                {
+                    var returnval = await db.QueryAsync< SupplierProductVM>("select S.ItemId,S.SupplierID, O.OrganizationName ,S.Price from SupplierProducts as S INNER JOIN Organizations AS O ON O.Id = S.SupplierID where S.ItemId = '" + ProductId.Trim() + "'");
+                    return returnval;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("User is not active");
+            }
+        }
+
+        public async Task<IEnumerable<SupplierWarrantyVM>> GetSupplierWarranty(int ProductId, int SupplierID)
+        {
+            try
+            {
+                using (IDbConnection db = Conn)
+                {
+                    var returnval = await db.QueryAsync<SupplierWarrantyVM>("select w.Id , w.Description,S.Duration , S.PriceForadditionalYear from SupplierWarrenties as S INNER JOIN WarrentyTypes AS W ON W.Id = S.WarrentyID where S.ProductId = @ProductId and s.SupplierID = @SupplierID" , new { @SupplierID = SupplierID , @ProductId= ProductId });
+                    return returnval;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("User is not active");
+            }
+        }
+
+
+
+        //select w.Id , w.Description,S.Duration , S.PriceForadditionalYear from SupplierWarrenties as S INNER JOIN WarrentyTypes AS W ON W.Id = S.WarrentyID where S.ProductId = 13 and s.SupplierID = 1004
+    }
 
 }
 

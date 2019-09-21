@@ -100,42 +100,57 @@ namespace B2BService.Service.Owin
         /// <returns></returns>
         public async Task<IdentityResult> CreateUserOnly(User userModel)
         {
-            CorparateRepository corprepo = new CorparateRepository();
-            IdentityUser user = new IdentityUser
+            try
             {
-                UserName = userModel.UserName,
-            };
-            //Saving the user to the ASP.NET user tables
-            var result = await _userManager.CreateAsync(user, userModel.Password);
-
-            //If above was successfull then we will add the user accounts
-            if (result.Succeeded)
-            {
-                //Set the user id to the ASP.net User id
-                userModel.UserId = user.Id;
-
-
-                //check orgId is a valied one.
-                bool orgValied = await corprepo.CheckOrganizationExits(userModel.OrganizationID);
-                if (!orgValied)
+                CorparateRepository corprepo = new CorparateRepository();
+                var path = System.Configuration.ConfigurationManager.AppSettings["ActivationPath"];
+                IdentityUser user = new IdentityUser
                 {
-                    //IdentityUser useride = new IdentityUser(userModel.UserName);
-                    var xres = _userManager.Delete(user);
-                    throw new Exception("Invalied Organization");
+                    UserName = userModel.UserName,
+                };
+                //Saving the user to the ASP.NET user tables
+                var result = await _userManager.CreateAsync(user, userModel.Password);
+
+                //If above was successfull then we will add the user accounts
+                if (result.Succeeded)
+                {
+                    //Set the user id to the ASP.net User id
+                    userModel.UserId = user.Id;
+
+
+                    //check orgId is a valied one.
+                    bool orgValied = await corprepo.CheckOrganizationExits(userModel.OrganizationID);
+                    if (!orgValied)
+                    {
+                        //IdentityUser useride = new IdentityUser(userModel.UserName);
+                        var xres = _userManager.Delete(user);
+                        throw new Exception("Invalied Organization");
+                    }
+                    //set User's active = false
+                    userModel.Activated = false;
+                    //Set supperuser false by defualt. becouse system not allowed more than one supper user for organization
+                    //This controller create users for existing orgs and 100% certenty that the org has supperuser already
+                    userModel.IsSupperUser = false;
+
+                    //- Create Approval Entry for given Org to visible to Supper User
+
+                    await corprepo.CreateUserOnly(userModel);
+
+                    //Send an email
+                    await corprepo.SendMail(new EmailVM() { UserId = userModel.UserId, ToAddress = userModel.Email }, path);
+
                 }
-                //set User's active = false
-                userModel.Activated = false;
-                //Set supperuser false by defualt. becouse system not allowed more than one supper user for organization
-                //This controller create users for existing orgs and 100% certenty that the org has supperuser already
-                userModel.IsSupperUser = false;
+                else {
+                    throw new Exception("User name you have given is already taken from another user.PleaseTry different user name ");
+                }
 
-                //- Create Approval Entry for given Org to visible to Supper User
-
-                await corprepo.CreateUserOnly(userModel);
-
+                return result;
+            }
+            catch (Exception ex) {
+                throw ex;
             }
 
-            return result;
+
         }
 
         public async Task<IdentityResult> CreateUserOnlyForAdmins(User userModel)
@@ -170,11 +185,17 @@ namespace B2BService.Service.Owin
 
         public async Task<IdentityUser> FindUser(string userName, string password)
         {
+            CorparateRepository corprepo = new CorparateRepository();
             IdentityUser user = await _userManager.FindAsync(userName, password);
 
             return user;
         }
-
+        public async Task<UserDataLoginVM> FindUserDataLogin(string userName)
+        {
+            CorparateRepository corprepo = new CorparateRepository();
+            var userData = await corprepo.FindUserDataLogin(userName);
+            return userData;
+        }
         public void Dispose()
         {
             _ctx.Dispose();

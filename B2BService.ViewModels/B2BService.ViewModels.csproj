@@ -63,6 +63,7 @@
     <Compile Include="Organisazion\CountryVM.cs" />
     <Compile Include="Organisazion\EmailVM.cs" />
     <Compile Include="Organisazion\OrgUserVM.cs" />
+    <Compile Include="Organisazion\UserDataLoginVM.cs" />
     <Compile Include="Organisazion\UserInObject.cs" />
     <Compile Include="Product\CatelogDataFeedVM.cs" />
     <Compile Include="Product\CatelogItemsVM.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Product\SpecLevelMasterVM.cs" />
     <Compile Include="Product\SubCatVM.cs" />
     <Compile Include="Product\SupplierBundleVM.cs" />
+    <Compile Include="Sales\QutationVM.cs" />
     <Compile Include="UserOrganisazionVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

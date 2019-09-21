@@ -269,6 +269,7 @@
     <Compile Include="Controllers\SystemControllers\CorparateController.cs" />
     <Compile Include="Controllers\SellerControllers\ProductController.cs" />
     <Compile Include="Controllers\SystemControllers\ItemsController.cs" />
+    <Compile Include="Controllers\SystemControllers\QuotationController.cs" />
     <Compile Include="Controllers\SystemControllers\SpecController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">

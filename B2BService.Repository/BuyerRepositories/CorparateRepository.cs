@@ -260,12 +260,12 @@ namespace B2BService.Repository.BuyerRepositories
             }
         }
 
-        public async Task<int> SendMail(EmailVM obj)
+        public async Task<int> SendMail(EmailVM obj, string path)
         {
             try
             {
                 var mail = GetEmailSettings();
-                MessagingService.SendMailAsync(mail , obj);
+                MessagingService.SendMailAsync(mail , obj, path);
                 return await Task.FromResult<int>(1);
             }
             catch (Exception ex)
@@ -290,6 +290,47 @@ namespace B2BService.Repository.BuyerRepositories
                 return new EmailSettings() {EnableSsl = true,FromPassword = "asdqwe123#" , Host= "smtp.gmail.com", Id=1, InfoEmail= "mr.hk.hunter@gmail.com" , Port = "587", Subject = "Welcome to Techthrong",UseDefaultCredentials = false };
             }
         }
+
+
+    
+        public async Task<UserDataLoginVM> FindUserDataLogin(string userName)
+        {
+            try
+            {
+                using (IDbConnection db = Conn)
+                {
+                    var returnval = await db.QuerySingleOrDefaultAsync<UserDataLoginVM>("SELECT  O.Id AS 'OrgId', O.OrganizationName AS 'OrgName',U.Id AS 'UserId'  , u.UserId as 'UserIdString' , U.UserName AS 'UserName' , U.IsSupperUser FROM Users AS U INNER JOIN Organizations AS O ON O.Id = U.OrganizationID WHERE U.UserName = @USERNAME", new { USERNAME = userName.Trim()});
+                    return returnval;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public async Task<int> ActivateUserExternal(string userId)
+        {
+            try
+            {
+
+                using (IDbConnection db = Conn)
+                {
+                    
+                    var returnval = await db.ExecuteAsync(" update Users set Activated = 1 where UserId = '" + userId.Trim() + "'");
+                    return returnval;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        
 
         public async Task<int> SaveConfirmationMail(EmailConfirmations obj)
         {
@@ -325,6 +366,40 @@ namespace B2BService.Repository.BuyerRepositories
                 return 3;
             }
         }
+
+
+        public async Task<int> CheckUserValidity(string UserId)
+        {
+            try
+            {
+                using (IDbConnection db = Conn)
+                {
+                    var returnval = await db.QuerySingleAsync<UserStatus>("SELECT U.Activated , U.Approved , O.IsSeller FROM Users AS U INNER JOIN Organizations AS O ON O.Id = U.OrganizationID where U.UserId = '" + UserId.Trim() + "'");
+
+                    //Check if user is not an active user. 2
+                    if (!returnval.Activated) {
+                        return 2;
+                    }
+                    //check if user is an approved user. 3
+                    if (!returnval.Approved) {
+                        return 3;
+                    }
+                    //Check if the user is a buyer. 4
+                    if (!returnval.IsSeller)
+                    {
+                        return 4;
+                    }
+                    //If all ok then 1
+                    return 1;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return 5;
+            }
+        }
+
 
         public async Task<int> SubscribeUser(string UserId)
         {

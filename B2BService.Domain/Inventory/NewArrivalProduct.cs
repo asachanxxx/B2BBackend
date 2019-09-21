@@ -16,5 +16,7 @@ namespace B2BService.Domain.Inventory
         public int Reviews { get; set; }
         public int Rating { get; set; }
         public int Availability { get; set; }
+        public int SupplierID { get; set; }
+        public string SupplierName { get; set; }
     }
 }

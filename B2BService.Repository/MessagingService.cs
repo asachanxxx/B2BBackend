@@ -12,14 +12,14 @@ namespace B2BService.Repository
 {
     public class MessagingService
     {
-        public static void SendMailAsync(EmailSettings Obj , EmailVM objemailvm) {
+        public static void SendMailAsync(EmailSettings Obj , EmailVM objemailvm, string path) {
             var fromAddress = new MailAddress(Obj.InfoEmail, "Techthrong");
             var toAddress = new MailAddress(objemailvm.ToAddress, "Hacker Name");
             string fromPassword = Obj.FromPassword;
             string subject = Obj.Subject;
             string body = "You’re receiving this message because you recently signed up for a Shopify account." +
                            "Confirm your email address by clicking the button below.This step adds extra security to your business by verifying you own this email."+
-                           "http://localhost:4200/classic/auth/newprofile";
+                           path + objemailvm.UserId;
 
             var smtp = new SmtpClient
             {

@@ -47,7 +47,10 @@ namespace B2BService.Domain.Inventory
         public string AddedSellerID { get; set; }
 
         public string Description { get; set; }
-        
+
+        public int SupplierId { get; set; }
+
+        public string SupplierName { get; set; }
 
     }
 }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace B2BService.Domain.Inventory
 {
-    public class Reviews:BaseClass
+    public class Review:BaseClass
     {
         public int Id { get; set; }
         public int ItemId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public bool IsAnon { get; set; }
         public string Caption { get; set; }
         public string Pros { get; set; }

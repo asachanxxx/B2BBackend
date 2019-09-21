@@ -68,6 +68,7 @@
     <Compile Include="Coparate\EmailConfirmations.cs" />
     <Compile Include="Coparate\EmailSettings.cs" />
     <Compile Include="Coparate\Organization.cs" />
+    <Compile Include="Coparate\OrgSerials.cs" />
     <Compile Include="Coparate\ProductRating.cs" />
     <Compile Include="Coparate\User.cs" />
     <Compile Include="Coparate\UserGroups.cs" />
@@ -81,7 +82,6 @@
     <Compile Include="Inventory\ProductDescriptionGroups.cs" />
     <Compile Include="Inventory\ProductImages.cs" />
     <Compile Include="Inventory\ProductInterests.cs" />
-    <Compile Include="Inventory\ProductReview.cs" />
     <Compile Include="Inventory\ProductReviews.cs" />
     <Compile Include="Inventory\Series.cs" />
     <Compile Include="Inventory\SpecialProducts.cs" />
@@ -100,6 +100,15 @@
     <Compile Include="Inventory\SpecDetail.cs" />
     <Compile Include="Inventory\SpecMaster.cs" />
     <Compile Include="Inventory\SpecGroups.cs" />
+    <Compile Include="Sales\OrderWarranty.cs" />
+    <Compile Include="Sales\QuotationDetails.cs" />
+    <Compile Include="Sales\QuotationMaster.cs" />
+    <Compile Include="Sales\QuotationRevision.cs" />
+    <Compile Include="Sales\OrderPriceChange.cs" />
+    <Compile Include="Sales\QuotationWarranty.cs" />
+    <Compile Include="Sales\SupplierOrderDetails.cs" />
+    <Compile Include="Sales\SupplierOrderHeader.cs" />
+    <Compile Include="Sales\WarrantyChangeLog.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
